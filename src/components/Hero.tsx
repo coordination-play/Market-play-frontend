@@ -1,17 +1,24 @@
-import { Flex, Heading } from "@chakra-ui/react";
+import { Flex, Heading, VStack } from "@chakra-ui/react";
+import { SiMarketo } from "react-icons/si";
 
-export const Hero = ({ title }: { title: string }) => (
+export const Hero = ({ project, title }: { project: string, title: string }) => (
   <Flex
     justifyContent="center"
     alignItems="center"
     height="100vh"
     bgGradient="linear(to-l, heroGradientStart, heroGradientEnd)"
     bgClip="text"
-  >
-    <Heading fontSize="6vw">{title}</Heading>
+  ><VStack>
+  <SiMarketo />
+
+ <Heading fontSize="2vw">{project}</Heading>
+ <Heading fontSize="4vw">{title}</Heading>
+  </VStack>
+   
   </Flex>
 );
 
 Hero.defaultProps = {
-  title: "with-chakra-ui-typescript",
+  project: "Market-play",
+  title: "Accelerate Web3 Growth",
 };

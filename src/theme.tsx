@@ -17,13 +17,15 @@ const theme = extendTheme({
         _dark: "#ade3b8",
       },
       heroGradientStart: {
-        default: "#7928CA",
-        _dark: "#e3a7f9",
+        default: "#00BFFF", // Deep Sky Blue, a vibrant cyan-blue
+        _dark: "#008B8B",   // Dark Cyan, more muted for dark themes
       },
       heroGradientEnd: {
-        default: "#FF0080",
-        _dark: "#fbec8f",
+        default: "#0000FF", // Pure Blue
+        _dark: "#00008B",   // Dark Blue, deeper for enhanced contrast in dark themes
       },
+      
+      
     },
     radii: {
       button: "12px",

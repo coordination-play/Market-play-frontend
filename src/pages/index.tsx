@@ -5,6 +5,8 @@ import {
   List,
   ListIcon,
   ListItem,
+  Center,
+  Heading,
 } from "@chakra-ui/react";
 import { CheckCircleIcon, LinkIcon } from "@chakra-ui/icons";
 
@@ -19,27 +21,33 @@ const Index = () => (
   <Container height="100vh">
     <Hero />
     <Main>
-      <Text color="text">
-        Example repository of <Code>Next.js</Code> + <Code>chakra-ui</Code> +{" "}
-        <Code>TypeScript</Code>.
-      </Text>
-
+      <Center ml={5} mt={20}>
+        <Heading fontSize={'medium'} color={'blue.800'}>
+          Motivate leading Web3 contributors to elevate your project. Effortlessly set up campaigns, allocate tokens, execute your strategy, and reward your advocates.
+        </Heading>
+      </Center>
       <List spacing={3} my={0} color="text">
         <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
+          <ListIcon as={CheckCircleIcon} color="cyan.500" />
           <ChakraLink
             isExternal
             href="https://chakra-ui.com"
             flexGrow={1}
             mr={2}
           >
-            Chakra UI <LinkIcon />
+            Grow effectively
           </ChakraLink>
         </ListItem>
         <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
+          <ListIcon as={CheckCircleIcon} color="cyan.500" />
           <ChakraLink isExternal href="https://nextjs.org" flexGrow={1} mr={2}>
-            Next.js <LinkIcon />
+            Collaborate with top contributors
+          </ChakraLink>
+        </ListItem>
+        <ListItem>
+          <ListIcon as={CheckCircleIcon} color="cyan.500" />
+          <ChakraLink isExternal href="https://nextjs.org" flexGrow={1} mr={2}>
+            Reward valuable contributions
           </ChakraLink>
         </ListItem>
       </List>
@@ -47,7 +55,7 @@ const Index = () => (
 
     <DarkModeSwitch />
     <Footer>
-      <Text>Next ❤️ Chakra</Text>
+      <Text>Starknet ❤️ Cairo</Text>
     </Footer>
     <CTA />
   </Container>
