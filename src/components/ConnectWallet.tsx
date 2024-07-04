@@ -26,7 +26,7 @@ export default function WalletManager() {
 
   return (
     <Box w="full" p={4}>
-      <Button onClick={onOpen} variant="solid" colorScheme={"purple"}>
+      <Button onClick={onOpen} variant="solid"  size={"md"} colorScheme={"teal"}>
         {address ? `Disconnect Wallet: ${addressShort}` : "Connect Wallet"}
       </Button>
       
@@ -39,7 +39,7 @@ export default function WalletManager() {
             {address ? (
               <>
                 <Text mb={4}>Connected as {addressShort}</Text>
-                <Button colorScheme="red" onClick={() => {
+                <Button colorScheme="red" mb={2} onClick={() => {
                   disconnect();
                   onClose();
                 }}>

@@ -19,6 +19,6 @@ export const Hero = ({ project, title }: { project: string, title: string }) => 
 );
 
 Hero.defaultProps = {
-  project: "Market-play",
+  project: "Grow My DAO",
   title: "Accelerate Web3 Growth",
 };
