@@ -8,7 +8,7 @@ import CampaignSuccess from "../components/CampaignSuccess";
 export default function page() {
     return (
     <VStack>
-<CampaignSuccess/>
+        <ContributorLinkedSuccess/>
     </VStack>)
     
 }

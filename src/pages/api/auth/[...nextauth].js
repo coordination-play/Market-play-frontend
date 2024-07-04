@@ -5,7 +5,6 @@ import TwitterProvider from "next-auth/providers/twitter";
 export default NextAuth({
     providers: [
         TwitterProvider({
-            
             clientId: process.env.TWITTER_CLIENT_ID,
             clientSecret: process.env.TWITTER_CLIENT_SECRET,
             version: '2.0', // Use Twitter OAuth 2.0
@@ -13,8 +12,7 @@ export default NextAuth({
     ],
     callbacks: {
         async session({ session, token, user }) {
-            // Send properties to the client, like user name, from the session callback
-            session.user.id = token.id;
+            session.user.id = token.sub;
             session.user.username = token.screen_name;
             session.user.email= token.email;
             return session;

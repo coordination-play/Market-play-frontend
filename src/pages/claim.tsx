@@ -1,8 +1,8 @@
+import { Button } from "@chakra-ui/react";
 import { getSession, signIn, signOut, useSession } from "next-auth/react";
 import { useEffect } from "react";
 
 function MyApp({session}) {
-//const { data: session } = useSession();
 useEffect(() => {
     console.log("session object is", session);
   }, []);
@@ -10,17 +10,19 @@ useEffect(() => {
     return (
       <div>
         <p>Welcome, {session?.user?.name}! <br />
-           Your Twitter email is: {session?.user?.email}</p>
-        <button onClick={() => signOut()}>Sign out</button>
+           Your Twitter account ID is: {session?.user?.id}</p>
+        <Button colorScheme={"blue"} onClick={() => signOut()}>Sign out</Button>
       </div>
     );
   }
 
   return (
     <div>
-      <button onClick={() => signIn('twitter')}>Sign in with Twitter</button>
+      <Button  colorScheme={"blue"} onClick={() => signIn('twitter')}>Sign in with Twitter</Button>
     </div>
   );
+
+
 }
 
 export default MyApp;
