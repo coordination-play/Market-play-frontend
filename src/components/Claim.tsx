@@ -2,14 +2,17 @@ import { Flex, Box, chakra, Text, Stack, Button, Heading, VStack } from "@chakra
 import Link from "next/link";
 import React from "react";
 import WalletManager from "./ConnectWallet";
+import { getSession, signIn, signOut, useSession } from "next-auth/react";
 
 export default function Claim() {
+  const { data: session } = useSession();
+
   return (
     <Flex
       direction="column"
       align="center"
       justify="center"
-      h="100vh"  // Makes the Flex container take up the full viewport height
+      h="100vh"  
       w="full"
       bg="#edf3f8"
       _dark={{
@@ -19,15 +22,15 @@ export default function Claim() {
       <VStack
         spacing={4}
         w="full"
-        maxW="md"  // Limits the width of the content to a reasonable maximum
+        maxW="md"  
         px={10}
         py={20}
         bg="white"
         _dark={{
           bg: "gray.800",
         }}
-        boxShadow="xl"  // Adds a shadow for better visibility on both light and dark backgrounds
-        rounded="lg"  // Gives the container rounded corners
+        boxShadow="xl"  
+        rounded="lg"  
         textAlign="center"
       >
         <chakra.span
@@ -41,18 +44,25 @@ export default function Claim() {
           Ready to claim your rewards?
         </chakra.span>
         <Text>
-        Start by connecting your wallet.
-          After connecting your wallet and authenticating your twitter account, your accounts will be linked. This info is required for Organizations to verify your contributions and distribute the rewards.
+          Start by connecting your twitter account.
+          After authenticating your Twitter account, your wallet and twitter account will be linked. 
+          This info is required for Organizations to verify your contributions and distribute the rewards.
         </Text>
         <Stack
-        mt={8}
+          mt={8}
           direction="column"
           align="center"
           w="full"
         >
-          <Button colorScheme="teal" size="md" px={7} py={2} mt={2}>
-            Get Started
-          </Button>
+          {session ? (
+            <Button colorScheme="teal" size="md" px={7} py={2} mt={2} onClick={() => signOut()}>
+              Sign Out Twitter (Welcome, {session.user.name})
+            </Button>
+          ) : (
+            <Button colorScheme="teal" size="md" px={7} py={2} mt={2} onClick={() => signIn('twitter')}>
+              Sign In Twitter
+            </Button>
+          )}
           <WalletManager />
         </Stack>
       </VStack>

@@ -304,7 +304,7 @@ export default function Header() {
           transition="box-shadow 0.2s"
           bg={bg}
           borderTop="6px solid"
-          borderTopColor="brand.400"
+          borderTopColor="yellow.500"
           w="full"
           overflowY="hidden"
         >
@@ -335,6 +335,7 @@ export default function Header() {
                     <PopoverTrigger>
                       <Button
                         bg={bg}
+                        ml={6}
                         display="inline-flex"
                         alignItems="center"
                         fontSize="md"
