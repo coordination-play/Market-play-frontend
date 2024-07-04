@@ -3,6 +3,7 @@ import { useViewportScroll } from "framer-motion";
 import React from "react";
 import { DarkModeSwitch } from "./DarkModeSwitch";
 import { SiMarketo } from "react-icons/si";
+import WalletManager from "./ConnectWallet";
 
 
 export default function Header() {
@@ -396,10 +397,8 @@ export default function Header() {
                     md: "flex",
                   }}
                 >
-                  <Button colorScheme="brand" variant="ghost" size="sm">
-                    Connect Wallet
-                  </Button>
-              
+                  <WalletManager/>
+  
                 </HStack>
                <DarkModeSwitch/>
               </Flex>

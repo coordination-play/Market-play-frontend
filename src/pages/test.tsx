@@ -1,12 +1,12 @@
+"use client";
+
 import React from "react";
-import Header from "../components/Header";
-import Form from "../components/Form";
 import { VStack } from "@chakra-ui/react";
+import Claim from "../components/Claim";
 export default function page() {
     return (
     <VStack>
-<Header/>
-<Form/>
+<Claim />
     </VStack>)
     
 }

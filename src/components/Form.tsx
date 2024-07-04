@@ -55,6 +55,11 @@ export default function Form() {
                                         {errors.tokenAllocation && <Text color="red.500">This field is required</Text>}
                                     </FormControl>
                                     <FormControl as={GridItem} colSpan={[6, 3]}>
+                                        <FormLabel htmlFor="campaignStart">Campaign Start Date</FormLabel>
+                                        <Input {...register("campaignStart", { required: true })} type="date" />
+                                        {errors.campaignEnd && <Text color="red.500">This field is required</Text>}
+                                    </FormControl>
+                                    <FormControl as={GridItem} colSpan={[6, 3]}>
                                         <FormLabel htmlFor="campaignEnd">Campaign End Date</FormLabel>
                                         <Input {...register("campaignEnd", { required: true })} type="date" />
                                         {errors.campaignEnd && <Text color="red.500">This field is required</Text>}
