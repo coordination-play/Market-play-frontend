@@ -2,11 +2,11 @@
 
 import React from "react";
 import { VStack } from "@chakra-ui/react";
-import Claim from "../components/Claim";
+import CampaignDetails from "../components/CampaignDetails";
 export default function page() {
     return (
     <VStack>
-<Claim />
+        <CampaignDetails/>
     </VStack>)
     
 }
