@@ -4,9 +4,9 @@ import Form from "../components/Form";
 import { VStack } from "@chakra-ui/react";
 export default function page() {
     return (
-    <VStack>
-<Header/>
-<Form/>
-    </VStack>)
-    
+        <VStack>
+            <Header />
+            <Form />
+        </VStack>)
+
 }
