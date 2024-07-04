@@ -41,18 +41,16 @@ export default function Claim() {
           Ready to claim your rewards?
         </chakra.span>
         <Text>
-          Start by connecting your wallet.
-        </Text>
-        <Text>
+        Start by connecting your wallet.
           After connecting your wallet and authenticating your twitter account, your accounts will be linked. This info is required for Organizations to verify your contributions and distribute the rewards.
         </Text>
         <Stack
+        mt={8}
           direction="column"
-          spacing={4}
           align="center"
           w="full"
         >
-          <Button colorScheme="cyan" size="md" px={7} py={2} mt={2}>
+          <Button colorScheme="teal" size="md" px={7} py={2} mt={2}>
             Get Started
           </Button>
           <WalletManager />
