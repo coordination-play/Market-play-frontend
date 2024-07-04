@@ -19,16 +19,17 @@ import { Footer } from "../components/Footer";
 
 const Index = () => (
   <Container height="100vh">
+    
     <Hero />
     <Main>
-      <Center ml={5} mt={20}>
-        <Heading fontSize={'medium'} color={'blue.800'}>
+      <Center ml={5} pt={40}>
+        <Text fontWeight={'normal'} color={'blue.800'}>
           Motivate leading Web3 contributors to elevate your project. Effortlessly set up campaigns, allocate tokens, execute your strategy, and reward your advocates.
-        </Heading>
+        </Text>
       </Center>
       <List spacing={3} my={0} color="text">
         <ListItem>
-          <ListIcon as={CheckCircleIcon} color="cyan.500" />
+          <ListIcon as={CheckCircleIcon} color="yellow.500" />
           <ChakraLink
             isExternal
             href="https://chakra-ui.com"
@@ -39,13 +40,13 @@ const Index = () => (
           </ChakraLink>
         </ListItem>
         <ListItem>
-          <ListIcon as={CheckCircleIcon} color="cyan.500" />
+          <ListIcon as={CheckCircleIcon} color="yellow.500" />
           <ChakraLink isExternal href="https://nextjs.org" flexGrow={1} mr={2}>
             Collaborate with top contributors
           </ChakraLink>
         </ListItem>
         <ListItem>
-          <ListIcon as={CheckCircleIcon} color="cyan.500" />
+          <ListIcon as={CheckCircleIcon} color="yellow.500" />
           <ChakraLink isExternal href="https://nextjs.org" flexGrow={1} mr={2}>
             Reward valuable contributions
           </ChakraLink>
@@ -55,7 +56,7 @@ const Index = () => (
 
     <DarkModeSwitch />
     <Footer>
-      <Text>Starknet ❤️ Cairo</Text>
+      <Text fontWeight={"semibold"}>Starknet ❤️ Cairo</Text>
     </Footer>
     <CTA />
   </Container>

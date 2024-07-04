@@ -16,15 +16,14 @@ const theme = extendTheme({
         default: "#16161D",
         _dark: "#ade3b8",
       },
-      heroGradientStart: {
-        default: "#00BFFF", // Deep Sky Blue, a vibrant cyan-blue
-        _dark: "#008B8B",   // Dark Cyan, more muted for dark themes
-      },
       heroGradientEnd: {
-        default: "#0000FF", // Pure Blue
-        _dark: "#00008B",   // Dark Blue, deeper for enhanced contrast in dark themes
+        default: "#66CCCC", // Medium light teal, softer and lighter
+        _dark: "#66CCCC",   // Same medium light teal for both light and dark themes for consistency
       },
-      
+      heroGradientStart: {
+        default: "#006666", // Dark teal, rich and deep
+        _dark: "#006666",   // Same dark teal for both light and dark themes for uniformity
+      },
       
     },
     radii: {

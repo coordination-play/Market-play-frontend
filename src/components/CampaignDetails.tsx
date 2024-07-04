@@ -1,13 +1,13 @@
 import { Box, SimpleGrid, GridItem, Text, Heading, VStack, Divider, HStack, Button } from "@chakra-ui/react";
 import React from "react";
-import { AiTwotoneReconciliation } from "react-icons/ai";
+import { AiOutlineFileText  } from "react-icons/ai";
 import WalletManager from "./ConnectWallet";
 
 export default function CampaignDetails() {
     // Dummy data for demonstration
     const campaignData = {
         campaignName: "Spring Awareness",
-        campaignDescription: "A campaign to increase awareness of our spring collection. A campaign to increase awareness of our spring collection.A campaign to increase awareness of our spring collection.A campaign to increase awareness of our spring collection.A campaign to increase awareness of our spring collection.A campaign to increase awareness of our spring collection.A campaign to increase awareness of our spring collection.A campaign to increase awareness of our spring collection.A campaign to increase awareness of our spring collection.vA campaign to increase awareness of our spring collection.A campaign to increase awareness of our spring collection.A campaign to increase awareness of our spring collection.",
+        campaignDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu auctor lorem, a dapibus felis. Aliquam purus quam, faucibus vel lacus et, interdum pharetra risus. Donec tempus ipsum a eleifend pulvinar. Nulla facilisi. In hac habitasse platea dictumst. Phasellus aliquam elit ut consectetur sodales. Nulla facilisi. Nam risus odio, volutpat vel semper non, finibus eget diam. Quisque et euismod magna. Praesent volutpat velit ac ex gravida finibus. Donec neque dolor, lacinia eu sem sed, convallis pharetra tortor. In faucibus orci sed diam ultrices vehicula. Duis porta arcu at purus sagittis consequat. Ut nec pulvinar ipsum. Maecenas eget dui non urna bibendum lacinia.",
         tokenAddress: "0x04730a1c577be4d4d4752b18e71b1fefbb91239cc4967ec2dbd89347e0e99bd9",
         tokenAllocation: "100,000 USDC",
         campaignStart: "2023-09-01",
@@ -22,11 +22,11 @@ export default function CampaignDetails() {
             <HStack spacing={10} alignItems="start">
                 <VStack spacing={4} align="stretch" w="full">
                     <HStack>
-                        <Heading fontSize="3xl" fontWeight="medium" mb={4} textAlign="left" color={"teal.700"}>
+                        <Heading fontSize="3xl" fontWeight="medium" mb={4} textAlign="left" color={"teal.600"}>
                             Campaign Details
                         </Heading>
-                        <Box alignSelf={"end"} mb={4} mx={2}>
-                            <AiTwotoneReconciliation size={50} color="teal" />
+                        <Box alignSelf={"end"} mb={6} mx={2}>
+                            <AiOutlineFileText size={50} color="gold" />
                         </Box>
                     </HStack>
                     <VStack spacing={5}>
@@ -76,7 +76,7 @@ export default function CampaignDetails() {
                         </SimpleGrid>
                     </VStack>
                 </VStack>
-                <VStack spacing={3} align="stretch" position="sticky" top={40}>
+                <VStack spacing={3} align="stretch" position="sticky" top={40} >
                     <WalletManager/>
                     <Button colorScheme="teal" size="md">Upload CSV</Button>
                     <Button colorScheme="teal" size="md">Distribute Rewards</Button>

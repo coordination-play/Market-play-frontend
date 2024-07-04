@@ -6,19 +6,22 @@ export const Hero = ({ project, title }: { project: string, title: string }) => 
     justifyContent="center"
     alignItems="center"
     height="100vh"
-    bgGradient="linear(to-l, heroGradientStart, heroGradientEnd)"
-    bgClip="text"
-  ><VStack>
-  <SiMarketo />
-
- <Heading fontSize="2vw">{project}</Heading>
- <Heading fontSize="4vw">{title}</Heading>
-  </VStack>
-   
+  >
+    <VStack>
+      <SiMarketo size="3em"/> 
+      <Heading mt={4} color={"teal"} fontSize="2vw">{project}</Heading>
+      <Heading
+        fontSize="4vw"
+        bgGradient="linear(to-l, heroGradientStart, heroGradientEnd)" // Apply gradient to this title
+        bgClip="text"
+      >
+        {title}
+      </Heading>
+    </VStack>
   </Flex>
 );
 
 Hero.defaultProps = {
-  project: "Grow My DAO",
+  project: "Grow My Tribe",
   title: "Accelerate Web3 Growth",
 };

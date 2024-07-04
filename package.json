@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.9.0",
     "@starknet-react/chains": "^0.1.7",
     "@starknet-react/core": "^2.8.3",
+    "dayjs": "^1.11.11",
     "framer-motion": "^6.3.0",
     "get-starknet-core": "^3.3.0",
     "next": "latest",
