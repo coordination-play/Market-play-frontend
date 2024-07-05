@@ -1,16 +1,58 @@
-import { Flex, Box, chakra, Text, Stack, Button, Heading, VStack } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import { Flex, Box, chakra, Text, Stack, Button, Heading, VStack, Spinner } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from 'next/router';
 import { signIn, signOut, useSession } from "next-auth/react";
 import Header from "../components/Header";
 import { useAccount } from "@starknet-react/core";
+
 export default function Claim() {
     const { data: session } = useSession();
     const { account, address, status } = useAccount();
+    const [twitterID, setTwitterID] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
-        console.log(address)
-        console.log("session object is", session);
-    }, []);
+        console.log("Address:", address);
+        console.log("Session object:", session);
+        if (address && session) {
+            setLoading(true);
+            // Call the API route to save data
+            fetch('/api/saveUser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                // @ts-ignore
+                body: JSON.stringify({ address, twitterID: session.user?.id })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    setLoading(false);
+                    if (data.message === 'Success') {
+                        console.log('Data saved successfully');
+                        router.push('/contributorSucess');
+                    }
+                })
+                .catch(err => {
+                    setLoading(false);
+                    console.error('Error saving data:', err);
+                });
+        }
+    }, [address, session, router]);
+
+    useEffect(() => {
+        if (address) {
+            // Fetch the Twitter ID from your API or handle accordingly
+            // For example:
+            // fetchTwitterID(address).then(id => {
+            //   setTwitterID(id);
+            // }).catch((err) => {
+            //   console.error('Error retrieving data:', err);
+            // });
+        }
+    }, [address]);
+
     return (
         <VStack>
             <Header />
@@ -70,11 +112,16 @@ export default function Claim() {
                                 Verify Twitter
                             </Button>
                         )}
-
                     </Stack>
+                    {twitterID && <Text>Your connected Twitter ID is: {twitterID}</Text>}
+                    {loading && (
+                        <Box textAlign="center" mt={4}>
+                            <Text>Linking accounts</Text>
+                            <Spinner />
+                        </Box>
+                    )}
                 </VStack>
             </Flex>
         </VStack>
-
     );
 }
