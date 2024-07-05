@@ -105,7 +105,7 @@ export default function Form() {
                             </Stack>
 
                             <Box px={{ base: 4, sm: 6 }} py={3} bg="gray.50" _dark={{ bg: "#121212" }} textAlign="right">
-                                <Button type="submit" colorScheme="blue" _focus={{ shadow: "" }} fontWeight="md">
+                                <Button type="submit" colorScheme="teal" _focus={{ shadow: "" }} fontWeight="md">
                                     Submit
                                 </Button>
 
