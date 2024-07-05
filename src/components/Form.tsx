@@ -69,16 +69,16 @@ export default function Form() {
                                         <Heading alignSelf={'flex-start'} fontSize={"lg"} fontWeight={'semibold'}>Tweet Settings</Heading>
                                     </VStack>
                                     <FormControl as={GridItem} colSpan={[6, 6, null, 2]}>
-                                        <FormLabel htmlFor="likeWeight">Like Weight</FormLabel>
+                                        <FormLabel htmlFor="viewExponent">View Exponent</FormLabel>
                                         <Input {...register("likeWeight")} />
                                     </FormControl>
                                     <FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
-                                        <FormLabel htmlFor="retweetWeight">Retweet Weight</FormLabel>
-                                        <Input {...register("retweetWeight")} />
+                                        <FormLabel htmlFor="minFollowers">Min Followers</FormLabel>
+                                        <Input {...register("minFollowers")} />
                                     </FormControl>
                                     <FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
-                                        <FormLabel htmlFor="bookarkWeight">Bookmark Weight</FormLabel>
-                                        <Input {...register("bookarkWeight")} />
+                                        <FormLabel htmlFor="minImpressions">Min Impressions</FormLabel>
+                                        <Input {...register("minImpressions")} />
                                     </FormControl>
                                 </SimpleGrid>
                             </Stack>
