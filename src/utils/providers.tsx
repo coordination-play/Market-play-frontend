@@ -1,13 +1,14 @@
 "use client";
 import React from "react";
 
-import { sepolia, mainnet } from "@starknet-react/chains";
+import { sepolia, Chain } from "@starknet-react/chains";
 import {
   StarknetConfig,
   publicProvider,
   argent,
   braavos,
   useInjectedConnectors,
+  jsonRpcProvider,
   voyager
 } from "@starknet-react/core";
 
@@ -26,8 +27,19 @@ export function StarknetProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <StarknetConfig
-      chains={[mainnet, sepolia]}
-      provider={publicProvider()}
+      chains={[sepolia]}
+      provider={jsonRpcProvider({
+        rpc: (chain: Chain) => {
+          if (chain.id !== sepolia.id) {
+            alert("Unsupported chain. Please switch to Startnet Sepolia");
+            return null;
+          }
+
+          return {
+            nodeUrl: `https://starknet-sepolia.public.blastapi.io/rpc/v0_7`,
+          };
+        },
+      })}
       connectors={connectors}
       explorer={voyager}
     >

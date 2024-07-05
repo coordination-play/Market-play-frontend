@@ -333,9 +333,10 @@ export default function Header() {
                 >
                   <Popover>
                     <PopoverTrigger>
-                      <Button
+                      <Link
                         bg={bg}
                         ml={6}
+                        href="/create"
                         display="inline-flex"
                         alignItems="center"
                         fontSize="md"
@@ -347,7 +348,7 @@ export default function Header() {
                         }}
                       >
                         Create
-                      </Button>
+                      </Link>
                     </PopoverTrigger>
                     <PopoverContent
                       w="100vw"
@@ -356,11 +357,12 @@ export default function Header() {
                         boxShadow: "md",
                       }}
                     >
-                      <Features />
+                      {/* <Features /> */}
                     </PopoverContent>
                   </Popover>
-                  <Button
+                  <Link
                     bg={bg}
+                    href="/list"
                     display="inline-flex"
                     alignItems="center"
                     fontSize="md"
@@ -372,7 +374,7 @@ export default function Header() {
                     }}
                   >
                     View Campaigns
-                  </Button>
+                  </Link>
                   <Button
                     bg={bg}
                     display="inline-flex"

@@ -1,0 +1,287 @@
+[
+    {
+      "name": "Registry",
+      "type": "impl",
+      "interface_name": "influencer_marketing::registry::IRegistry"
+    },
+    {
+      "name": "influencer_marketing::registry::Organisation",
+      "type": "struct",
+      "members": [
+        {
+          "name": "name",
+          "type": "core::felt252"
+        },
+        {
+          "name": "metadata",
+          "type": "core::felt252"
+        },
+        {
+          "name": "organisation",
+          "type": "core::starknet::contract_address::ContractAddress"
+        }
+      ]
+    },
+    {
+      "name": "core::integer::u256",
+      "type": "struct",
+      "members": [
+        {
+          "name": "low",
+          "type": "core::integer::u128"
+        },
+        {
+          "name": "high",
+          "type": "core::integer::u128"
+        }
+      ]
+    },
+    {
+      "name": "influencer_marketing::registry::IRegistry",
+      "type": "interface",
+      "items": [
+        {
+          "name": "get_all_organisations",
+          "type": "function",
+          "inputs": [],
+          "outputs": [
+            {
+              "type": "(core::integer::u32, core::array::Array::<core::starknet::contract_address::ContractAddress>)"
+            }
+          ],
+          "state_mutability": "view"
+        },
+        {
+          "name": "get_all_organisations_details",
+          "type": "function",
+          "inputs": [],
+          "outputs": [
+            {
+              "type": "(core::integer::u32, core::array::Array::<influencer_marketing::registry::Organisation>)"
+            }
+          ],
+          "state_mutability": "view"
+        },
+        {
+          "name": "get_num_of_organisations",
+          "type": "function",
+          "inputs": [],
+          "outputs": [
+            {
+              "type": "core::integer::u32"
+            }
+          ],
+          "state_mutability": "view"
+        },
+        {
+          "name": "get_organisation_contract_class_hash",
+          "type": "function",
+          "inputs": [],
+          "outputs": [
+            {
+              "type": "core::starknet::class_hash::ClassHash"
+            }
+          ],
+          "state_mutability": "view"
+        },
+        {
+          "name": "create_organisation",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "name",
+              "type": "core::felt252"
+            },
+            {
+              "name": "metadata",
+              "type": "core::felt252"
+            }
+          ],
+          "outputs": [
+            {
+              "type": "core::starknet::contract_address::ContractAddress"
+            }
+          ],
+          "state_mutability": "external"
+        },
+        {
+          "name": "update_points",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "contributor",
+              "type": "core::starknet::contract_address::ContractAddress"
+            },
+            {
+              "name": "updated_points",
+              "type": "core::integer::u256"
+            }
+          ],
+          "outputs": [],
+          "state_mutability": "external"
+        },
+        {
+          "name": "replace_organisation_contract_hash",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "new_organisation_contract_class",
+              "type": "core::starknet::class_hash::ClassHash"
+            }
+          ],
+          "outputs": [],
+          "state_mutability": "external"
+        }
+      ]
+    },
+    {
+      "name": "OwnableImpl",
+      "type": "impl",
+      "interface_name": "openzeppelin::access::ownable::interface::IOwnable"
+    },
+    {
+      "name": "openzeppelin::access::ownable::interface::IOwnable",
+      "type": "interface",
+      "items": [
+        {
+          "name": "owner",
+          "type": "function",
+          "inputs": [],
+          "outputs": [
+            {
+              "type": "core::starknet::contract_address::ContractAddress"
+            }
+          ],
+          "state_mutability": "view"
+        },
+        {
+          "name": "transfer_ownership",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "new_owner",
+              "type": "core::starknet::contract_address::ContractAddress"
+            }
+          ],
+          "outputs": [],
+          "state_mutability": "external"
+        },
+        {
+          "name": "renounce_ownership",
+          "type": "function",
+          "inputs": [],
+          "outputs": [],
+          "state_mutability": "external"
+        }
+      ]
+    },
+    {
+      "name": "constructor",
+      "type": "constructor",
+      "inputs": [
+        {
+          "name": "owner",
+          "type": "core::starknet::contract_address::ContractAddress"
+        },
+        {
+          "name": "organisation_class_hash",
+          "type": "core::starknet::class_hash::ClassHash"
+        }
+      ]
+    },
+    {
+      "kind": "struct",
+      "name": "influencer_marketing::registry::Registry::OrganisationCreated",
+      "type": "event",
+      "members": [
+        {
+          "kind": "data",
+          "name": "name",
+          "type": "core::felt252"
+        },
+        {
+          "kind": "data",
+          "name": "organisation",
+          "type": "core::starknet::contract_address::ContractAddress"
+        },
+        {
+          "kind": "data",
+          "name": "metadata",
+          "type": "core::felt252"
+        },
+        {
+          "kind": "data",
+          "name": "id",
+          "type": "core::integer::u32"
+        }
+      ]
+    },
+    {
+      "kind": "struct",
+      "name": "openzeppelin::access::ownable::ownable::OwnableComponent::OwnershipTransferred",
+      "type": "event",
+      "members": [
+        {
+          "kind": "key",
+          "name": "previous_owner",
+          "type": "core::starknet::contract_address::ContractAddress"
+        },
+        {
+          "kind": "key",
+          "name": "new_owner",
+          "type": "core::starknet::contract_address::ContractAddress"
+        }
+      ]
+    },
+    {
+      "kind": "struct",
+      "name": "openzeppelin::access::ownable::ownable::OwnableComponent::OwnershipTransferStarted",
+      "type": "event",
+      "members": [
+        {
+          "kind": "key",
+          "name": "previous_owner",
+          "type": "core::starknet::contract_address::ContractAddress"
+        },
+        {
+          "kind": "key",
+          "name": "new_owner",
+          "type": "core::starknet::contract_address::ContractAddress"
+        }
+      ]
+    },
+    {
+      "kind": "enum",
+      "name": "openzeppelin::access::ownable::ownable::OwnableComponent::Event",
+      "type": "event",
+      "variants": [
+        {
+          "kind": "nested",
+          "name": "OwnershipTransferred",
+          "type": "openzeppelin::access::ownable::ownable::OwnableComponent::OwnershipTransferred"
+        },
+        {
+          "kind": "nested",
+          "name": "OwnershipTransferStarted",
+          "type": "openzeppelin::access::ownable::ownable::OwnableComponent::OwnershipTransferStarted"
+        }
+      ]
+    },
+    {
+      "kind": "enum",
+      "name": "influencer_marketing::registry::Registry::Event",
+      "type": "event",
+      "variants": [
+        {
+          "kind": "nested",
+          "name": "OrganisationCreated",
+          "type": "influencer_marketing::registry::Registry::OrganisationCreated"
+        },
+        {
+          "kind": "flat",
+          "name": "OwnableEvent",
+          "type": "openzeppelin::access::ownable::ownable::OwnableComponent::Event"
+        }
+      ]
+    }
+  ]

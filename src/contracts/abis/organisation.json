@@ -1,0 +1,354 @@
+[
+    {
+      "type": "impl",
+      "name": "Organisation",
+      "interface_name": "influencer_marketing::organisation::IOrganisation"
+    },
+    {
+      "type": "struct",
+      "name": "core::integer::u256",
+      "members": [
+        { "name": "low", "type": "core::integer::u128" },
+        { "name": "high", "type": "core::integer::u128" }
+      ]
+    },
+    {
+      "type": "struct",
+      "name": "influencer_marketing::organisation::Campaign",
+      "members": [
+        { "name": "name", "type": "core::felt252" },
+        { "name": "metadata", "type": "core::felt252" },
+        { "name": "start_time", "type": "core::integer::u64" },
+        { "name": "duration", "type": "core::integer::u64" },
+        { "name": "total_points_allocated", "type": "core::integer::u32" },
+        {
+          "name": "token_address",
+          "type": "core::starknet::contract_address::ContractAddress"
+        },
+        { "name": "token_amount", "type": "core::integer::u256" }
+      ]
+    },
+    {
+      "type": "enum",
+      "name": "core::bool",
+      "variants": [
+        { "name": "False", "type": "()" },
+        { "name": "True", "type": "()" }
+      ]
+    },
+    {
+      "type": "enum",
+      "name": "influencer_marketing::organisation::State",
+      "variants": [
+        { "name": "Pending", "type": "()" },
+        { "name": "Active", "type": "()" },
+        { "name": "Ended", "type": "()" },
+        { "name": "Allocated", "type": "()" }
+      ]
+    },
+    {
+      "type": "struct",
+      "name": "influencer_marketing::organisation::Rules",
+      "members": [
+        { "name": "views_weightage", "type": "core::integer::u32" },
+        { "name": "like_weightage", "type": "core::integer::u32" },
+        { "name": "reply_weightage", "type": "core::integer::u32" },
+        { "name": "retweet_weightage", "type": "core::integer::u32" },
+        { "name": "followers_threshold", "type": "core::integer::u32" },
+        { "name": "max_mentions", "type": "core::integer::u32" }
+      ]
+    },
+    {
+      "type": "struct",
+      "name": "influencer_marketing::organisation::ImpressionData",
+      "members": [
+        {
+          "name": "user",
+          "type": "core::starknet::contract_address::ContractAddress"
+        },
+        { "name": "points", "type": "core::integer::u32" }
+      ]
+    },
+    {
+      "type": "interface",
+      "name": "influencer_marketing::organisation::IOrganisation",
+      "items": [
+        {
+          "type": "function",
+          "name": "name",
+          "inputs": [],
+          "outputs": [{ "type": "core::felt252" }],
+          "state_mutability": "view"
+        },
+        {
+          "type": "function",
+          "name": "metadata",
+          "inputs": [],
+          "outputs": [{ "type": "core::felt252" }],
+          "state_mutability": "view"
+        },
+        {
+          "type": "function",
+          "name": "get_campaign",
+          "inputs": [{ "name": "campaign_id", "type": "core::integer::u32" }],
+          "outputs": [{ "type": "influencer_marketing::organisation::Campaign" }],
+          "state_mutability": "view"
+        },
+        {
+          "type": "function",
+          "name": "get_campaign_reward",
+          "inputs": [
+            {
+              "name": "user",
+              "type": "core::starknet::contract_address::ContractAddress"
+            },
+            { "name": "campaign_id", "type": "core::integer::u32" }
+          ],
+          "outputs": [{ "type": "(core::integer::u256, core::bool)" }],
+          "state_mutability": "view"
+        },
+        {
+          "type": "function",
+          "name": "get_all_campaigns",
+          "inputs": [],
+          "outputs": [
+            {
+              "type": "(core::integer::u32, core::array::Array::<influencer_marketing::organisation::Campaign>)"
+            }
+          ],
+          "state_mutability": "view"
+        },
+        {
+          "type": "function",
+          "name": "state",
+          "inputs": [{ "name": "campaign_id", "type": "core::integer::u32" }],
+          "outputs": [{ "type": "influencer_marketing::organisation::State" }],
+          "state_mutability": "view"
+        },
+        {
+          "type": "function",
+          "name": "create_campaign",
+          "inputs": [
+            { "name": "name", "type": "core::felt252" },
+            { "name": "metadata", "type": "core::felt252" },
+            { "name": "start_time", "type": "core::integer::u64" },
+            { "name": "duration", "type": "core::integer::u64" },
+            {
+              "name": "token_address",
+              "type": "core::starknet::contract_address::ContractAddress"
+            },
+            { "name": "token_amount", "type": "core::integer::u256" },
+            {
+              "name": "rules",
+              "type": "influencer_marketing::organisation::Rules"
+            }
+          ],
+          "outputs": [],
+          "state_mutability": "external"
+        },
+        {
+          "type": "function",
+          "name": "settle_campaign",
+          "inputs": [
+            { "name": "campaign_id", "type": "core::integer::u32" },
+            {
+              "name": "contributions",
+              "type": "core::array::Array::<influencer_marketing::organisation::ImpressionData>"
+            }
+          ],
+          "outputs": [],
+          "state_mutability": "external"
+        },
+        {
+          "type": "function",
+          "name": "claim",
+          "inputs": [{ "name": "campaign_id", "type": "core::integer::u32" }],
+          "outputs": [],
+          "state_mutability": "external"
+        }
+      ]
+    },
+    {
+      "type": "impl",
+      "name": "OwnableImpl",
+      "interface_name": "openzeppelin::access::ownable::interface::IOwnable"
+    },
+    {
+      "type": "interface",
+      "name": "openzeppelin::access::ownable::interface::IOwnable",
+      "items": [
+        {
+          "type": "function",
+          "name": "owner",
+          "inputs": [],
+          "outputs": [
+            { "type": "core::starknet::contract_address::ContractAddress" }
+          ],
+          "state_mutability": "view"
+        },
+        {
+          "type": "function",
+          "name": "transfer_ownership",
+          "inputs": [
+            {
+              "name": "new_owner",
+              "type": "core::starknet::contract_address::ContractAddress"
+            }
+          ],
+          "outputs": [],
+          "state_mutability": "external"
+        },
+        {
+          "type": "function",
+          "name": "renounce_ownership",
+          "inputs": [],
+          "outputs": [],
+          "state_mutability": "external"
+        }
+      ]
+    },
+    {
+      "type": "constructor",
+      "name": "constructor",
+      "inputs": [
+        { "name": "name", "type": "core::felt252" },
+        { "name": "metadata", "type": "core::felt252" },
+        {
+          "name": "owner",
+          "type": "core::starknet::contract_address::ContractAddress"
+        },
+        {
+          "name": "registry",
+          "type": "core::starknet::contract_address::ContractAddress"
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "name": "influencer_marketing::organisation::Organisation::CampaignStarted",
+      "kind": "struct",
+      "members": [
+        { "name": "campaign_id", "type": "core::integer::u32", "kind": "data" },
+        { "name": "name", "type": "core::felt252", "kind": "data" },
+        { "name": "metadata", "type": "core::felt252", "kind": "data" },
+        { "name": "start_time", "type": "core::integer::u64", "kind": "data" },
+        { "name": "duration", "type": "core::integer::u64", "kind": "data" },
+        {
+          "name": "token_address",
+          "type": "core::starknet::contract_address::ContractAddress",
+          "kind": "data"
+        },
+        { "name": "token_amount", "type": "core::integer::u256", "kind": "data" },
+        {
+          "name": "rules",
+          "type": "influencer_marketing::organisation::Rules",
+          "kind": "data"
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "name": "influencer_marketing::organisation::Organisation::CampaignEnded",
+      "kind": "struct",
+      "members": [
+        { "name": "campaign_id", "type": "core::integer::u32", "kind": "data" },
+        {
+          "name": "total_points_alloted",
+          "type": "core::integer::u32",
+          "kind": "data"
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "name": "influencer_marketing::organisation::Organisation::ContributionUpdated",
+      "kind": "struct",
+      "members": [
+        {
+          "name": "contributor",
+          "type": "core::starknet::contract_address::ContractAddress",
+          "kind": "data"
+        },
+        { "name": "campaign_id", "type": "core::integer::u32", "kind": "data" },
+        { "name": "points_earned", "type": "core::integer::u32", "kind": "data" }
+      ]
+    },
+    {
+      "type": "event",
+      "name": "openzeppelin::access::ownable::ownable::OwnableComponent::OwnershipTransferred",
+      "kind": "struct",
+      "members": [
+        {
+          "name": "previous_owner",
+          "type": "core::starknet::contract_address::ContractAddress",
+          "kind": "key"
+        },
+        {
+          "name": "new_owner",
+          "type": "core::starknet::contract_address::ContractAddress",
+          "kind": "key"
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "name": "openzeppelin::access::ownable::ownable::OwnableComponent::OwnershipTransferStarted",
+      "kind": "struct",
+      "members": [
+        {
+          "name": "previous_owner",
+          "type": "core::starknet::contract_address::ContractAddress",
+          "kind": "key"
+        },
+        {
+          "name": "new_owner",
+          "type": "core::starknet::contract_address::ContractAddress",
+          "kind": "key"
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "name": "openzeppelin::access::ownable::ownable::OwnableComponent::Event",
+      "kind": "enum",
+      "variants": [
+        {
+          "name": "OwnershipTransferred",
+          "type": "openzeppelin::access::ownable::ownable::OwnableComponent::OwnershipTransferred",
+          "kind": "nested"
+        },
+        {
+          "name": "OwnershipTransferStarted",
+          "type": "openzeppelin::access::ownable::ownable::OwnableComponent::OwnershipTransferStarted",
+          "kind": "nested"
+        }
+      ]
+    },
+    {
+      "type": "event",
+      "name": "influencer_marketing::organisation::Organisation::Event",
+      "kind": "enum",
+      "variants": [
+        {
+          "name": "CampaignStarted",
+          "type": "influencer_marketing::organisation::Organisation::CampaignStarted",
+          "kind": "nested"
+        },
+        {
+          "name": "CampaignEnded",
+          "type": "influencer_marketing::organisation::Organisation::CampaignEnded",
+          "kind": "nested"
+        },
+        {
+          "name": "ContributionUpdated",
+          "type": "influencer_marketing::organisation::Organisation::ContributionUpdated",
+          "kind": "nested"
+        },
+        {
+          "name": "OwnableEvent",
+          "type": "openzeppelin::access::ownable::ownable::OwnableComponent::Event",
+          "kind": "flat"
+        }
+      ]
+    }
+  ]

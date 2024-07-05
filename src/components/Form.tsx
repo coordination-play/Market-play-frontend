@@ -7,17 +7,47 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useWriteOrganisationContract } from "../contracts/write";
+import { toast } from "sonner";
+
 
 export default function Form() {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { data: session } = useSession();
-    const onSubmit = data => {
-        // @ts-ignore
-        data.userId = session?.user?.id;
+    // const onSubmit = data => {
+    //     // @ts-ignore
+    //     data.userId = session?.user?.id;
 
-        alert(data);
-        console.log(data);
-    };
+    //     alert(data);
+    //     console.log(data);
+    // };
+
+    const uploadPointsMutate = useWriteOrganisationContract(
+        "create_campaign",
+        {
+          successMessage: "Campaign Created successfully",
+        }
+      );
+    
+      const onSubmit = async (values) => {
+        // const monthIdStr = getMonthId(values.month, values.year);
+        console.log(values.campaignName, values.campaignDescription, Math.floor(new Date(values.campaignStart).getTime() / 1000), Math.floor(new Date(values.campaignEnd).getTime() / 1000), values.tokenAddress, values.tokenAllocation)
+        toast.promise(
+          uploadPointsMutate.writeAsyncAndWait([values.campaignName, values.campaignDescription, Math.floor(new Date(values.campaignStart).getTime() / 1000), Math.floor(new Date(values.campaignEnd).getTime() / 1000), values.tokenAddress, values.tokenAllocation, {views_weightage:1, like_weightage: 2,reply_weightage: 3,retweet_weightage: 4, followers_threshold: 5 ,max_mentions:6, target_handle: '@rgoyal'}]),
+          {
+            loading: "Creating campaign...",
+            success: () => {
+              return `Successfully added funds to campaign ${values.name} . Data can take couple minutes to reflect`;
+            },
+            finally: () => {
+            //   onClose();
+            },
+            error: (err) => {
+              return err?.message || "Failed to create campaign";
+            },
+          }
+        );
+      };
     return (
         <Box bg="#edf3f8" _dark={{ bg: "#111" }} p={10}>
             <Box>
