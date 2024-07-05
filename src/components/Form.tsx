@@ -2,18 +2,22 @@ import { useForm } from 'react-hook-form';
 import {
     Box, SimpleGrid, GridItem, Text, Heading, chakra, Stack, FormControl, FormLabel, Input,
     Textarea, Button, Divider,
-    VStack
+    VStack,
+    HStack
 } from "@chakra-ui/react";
 import React from "react";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function Form() {
     const { register, handleSubmit, formState: { errors } } = useForm();
-
+    const { data: session } = useSession();
     const onSubmit = data => {
+        // @ts-ignore
+        data.userId = session?.user?.id;
+
         alert(data);
         console.log(data);
     };
-
     return (
         <Box bg="#edf3f8" _dark={{ bg: "#111" }} p={10}>
             <Box>
@@ -70,7 +74,7 @@ export default function Form() {
                                     </VStack>
                                     <FormControl as={GridItem} colSpan={[6, 6, null, 2]}>
                                         <FormLabel htmlFor="viewExponent">View Exponent</FormLabel>
-                                        <Input {...register("likeWeight")} />
+                                        <Input {...register("viewExponent")} />
                                     </FormControl>
                                     <FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
                                         <FormLabel htmlFor="minFollowers">Min Followers</FormLabel>
@@ -80,12 +84,31 @@ export default function Form() {
                                         <FormLabel htmlFor="minImpressions">Min Impressions</FormLabel>
                                         <Input {...register("minImpressions")} />
                                     </FormControl>
+                                    <FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
+                                        <FormLabel htmlFor="maxMentions">Max Mentions</FormLabel>
+                                        <Input {...register("maxMentions")} />
+                                    </FormControl>
+                                    <VStack>
+                                    <Heading alignSelf={"start"} fontSize={"md"}  mb={-1}fontWeight={"semibold"}>Campaign for </Heading>
+                                        {session ? (
+                                            <Button colorScheme="teal" variant={"ghost"} size="md" px={7} py={2} mt={2} onClick={() => signOut()}>
+                                                 {/*@ts-ignore */}
+                                               {session.user?.id!}
+                                            </Button>
+                                        ) : (
+                                            <Button colorScheme="teal" variant={"outline"} size="md" px={4} py={2} mt={2} onClick={() => signIn('twitter')}>
+                                                Connect Twitter
+                                            </Button>
+                                        )}
+                                    </VStack>
                                 </SimpleGrid>
                             </Stack>
+
                             <Box px={{ base: 4, sm: 6 }} py={3} bg="gray.50" _dark={{ bg: "#121212" }} textAlign="right">
                                 <Button type="submit" colorScheme="blue" _focus={{ shadow: "" }} fontWeight="md">
                                     Submit
                                 </Button>
+
                             </Box>
                         </chakra.form>
                     </GridItem>
