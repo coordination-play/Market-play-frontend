@@ -90,8 +90,8 @@ export default function CampaignDetails() {
                     <WalletManager/>
                     <Button colorScheme="teal" size="md">Upload CSV</Button>
                     <Button colorScheme="teal" size="md">Distribute Rewards</Button>
-                    {/* <Button colorScheme="teal" size="md">Delete Campaign</Button>
-                    <Button colorScheme="teal" size="md">Export Data</Button> */}
+                    <Button colorScheme="teal" size="md">Download CSV</Button>
+                    <Button colorScheme="teal" size="md">Settle Campaign</Button>
                 </VStack>
             </HStack>
         </Box>
