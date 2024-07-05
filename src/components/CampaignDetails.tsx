@@ -1,10 +1,86 @@
-import { Box, SimpleGrid, GridItem, Text, Heading, VStack, Divider, HStack, Button } from "@chakra-ui/react";
+import { Box, SimpleGrid, GridItem, Text, Heading, VStack, Divider, HStack, Button, Spinner, FormControl, Input, FormLabel, IconButton } from "@chakra-ui/react";
 import React from "react";
 import { AiOutlineFileText  } from "react-icons/ai";
 import WalletManager from "./ConnectWallet";
 
+import DownloadDataButton from "./DownloadCSV";
+import UploadCSVButton from "./UploadCSV";
+import { useAccount } from "@starknet-react/core";
+import WalletManager from "./ConnectWallet";
+import { OrganisationABI, RegistryABI, CONTRACTS_ADDRESSES } from "../contracts/contracts";
+import {
+    UseContractReadResult,
+    useContractRead
+  } from "@starknet-react/core";
+  import { Dispatch, Ref, SetStateAction, useRef, useEffect, useState } from 'react'
+import { CheckIcon } from "@chakra-ui/icons";
+
+
 export default function CampaignDetails() {
     // Dummy data for demonstration
+    const [previewData, setPreviewData] = useState<ContributorData[]>([]);
+    const COLUMNS = {
+        CONTRIBUTOR_USERNAME: "contributor_username",
+        VIEWS: "views",
+        LIKES: "likes",
+      } as const;
+
+    const { data: data, isLoading, isError, isSuccess, error } = useContractRead({
+        abi: OrganisationABI,
+        address: CONTRACTS_ADDRESSES.ORGANISATION,
+        functionName: "get_campaign",
+        args: [1],
+        watch: true,
+    });
+
+    function unixTimestampToDate(unixTimestamp: number): string {
+        // Create a new Date object using the Unix timestamp (in milliseconds)
+        const date = new Date(unixTimestamp * 1000);
+      
+        // Format the date to a readable string
+        const formattedDate = date.toLocaleDateString();;
+      
+        return formattedDate;
+      }
+
+    function bigIntToWords(bigNumber: bigint): string {
+        let hexString = bigNumber.toString(16).toUpperCase(); // Convert BigInt to a hex string and make it uppercase
+    
+        // Ensure the hex string has an even number of characters
+        if (hexString.length % 2 !== 0) {
+            hexString = '0' + hexString;
+        }
+    
+        // Convert hex to bytes
+        let bytes = hexString.match(/.{1,2}/g) || [];
+        
+        // Convert bytes to ASCII characters
+        let words = bytes.map(byte => {
+            const value = parseInt(byte, 16);
+            return value >= 32 && value <= 126 ? String.fromCharCode(value) : `0x${byte}`;
+        });
+    
+        return words.join('');
+    }
+
+    function shortenAddress(address: string): string {
+        return address ? `0x${address.slice(0, 6)}...${address.slice(-4)}` : null;
+    }
+
+    useEffect(() => {
+        console.log("data2",previewData)
+        if (previewData) {
+
+        }
+        
+      }, [isLoading, previewData])
+
+      type ContributorData = {
+        contributor: string;
+        likes: number;
+        views: number;
+      };
+      
     const campaignData = {
         campaignName: "Spring Awareness",
         campaignDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu auctor lorem, a dapibus felis. Aliquam purus quam, faucibus vel lacus et, interdum pharetra risus. Donec tempus ipsum a eleifend pulvinar. Nulla facilisi. In hac habitasse platea dictumst. Phasellus aliquam elit ut consectetur sodales. Nulla facilisi. Nam risus odio, volutpat vel semper non, finibus eget diam. Quisque et euismod magna. Praesent volutpat velit ac ex gravida finibus. Donec neque dolor, lacinia eu sem sed, convallis pharetra tortor. In faucibus orci sed diam ultrices vehicula. Duis porta arcu at purus sagittis consequat. Ut nec pulvinar ipsum. Maecenas eget dui non urna bibendum lacinia.",
@@ -16,6 +92,24 @@ export default function CampaignDetails() {
         retweetWeight: "1.25",
         bookmarkWeight: "1.75"
     };
+
+    const UsernameToaddressMapping = {
+         "@": "0x123456789abcdef",
+         "user2": "0xa1b2c3d4e5f6g7h8",
+        // Add more mappings here
+      };
+
+      function upload() {
+        const updatedPreviewData = previewData.map(contributor => {
+          const address = UsernameToaddressMapping[contributor.contributor];
+          return {
+            ...contributor,
+            contributor: address || contributor.contributor // Fallback to the address if no username is found
+          };
+        });
+        setPreviewData(updatedPreviewData);
+        console.log("Updated Preview Data:", updatedPreviewData);
+      }
 
     return (
         <Box bg="#edf3f8" _dark={{ bg: "#111" }} p={20} minH="100vh" w="full">
@@ -30,30 +124,36 @@ export default function CampaignDetails() {
                         </Box>
                     </HStack>
                     <VStack spacing={5}>
+                    {isLoading ? (
+            <Spinner />
+          ) : !data ? (
+            <p className="font-medium text-sm"> Campaign Not found </p>
+          ) : (<div>
                         <SimpleGrid columns={{ base: 1, md: 3 }} w="full" p={4} bg="white" _dark={{ bg: "gray.700" }} rounded="md" shadow="base">
                             <GridItem my={2}>
                                 <Text fontWeight="bold">Campaign Name:</Text>
                                 <Text>{campaignData.campaignName}</Text>
+                                <Text>{bigIntToWords(data.name)}</Text>
                             </GridItem>
                             <GridItem colSpan={{ base: 1, md: 3 }} my={3}>
                                 <Text fontWeight="bold">Description:</Text>
-                                <Text>{campaignData.campaignDescription}</Text>
+                                <Text>{bigIntToWords(data.metadata)}</Text>
                             </GridItem>
                             <GridItem colSpan={{ base: 1, md: 2 }} my={3}>
                                 <Text fontWeight="bold">Token Address:</Text>
-                                <Text>{campaignData.tokenAddress}</Text>
+                                <Text>{shortenAddress(data.token_address.toString(16))}</Text>
                             </GridItem>
                             <GridItem my={3}>
                                 <Text fontWeight="bold">Budget Allocation:</Text>
-                                <Text>{campaignData.tokenAllocation}</Text>
+                                <Text>{data.token_amount.toString()}</Text>
                             </GridItem>
                             <GridItem my={3}>
                                 <Text fontWeight="bold">Campaign Start:</Text>
-                                <Text>{campaignData.campaignStart}</Text>
+                                <Text>{unixTimestampToDate(data.start_time.toString())}</Text>
                             </GridItem>
                             <GridItem my={3}>
                                 <Text fontWeight="bold">Campaign End:</Text>
-                                <Text>{campaignData.campaignEnd}</Text>
+                                <Text>{unixTimestampToDate(data.duration.toString())}</Text>
                             </GridItem>
                         </SimpleGrid>
                         <Divider my={4} />
@@ -74,6 +174,8 @@ export default function CampaignDetails() {
                                 <Text>{campaignData.bookmarkWeight}</Text>
                             </GridItem>
                         </SimpleGrid>
+                        </div>
+                        )}
                     </VStack>
                 </VStack>
                 <VStack spacing={3} align="stretch" position="sticky" top={40} >
@@ -83,6 +185,233 @@ export default function CampaignDetails() {
                     {/* <Button colorScheme="teal" size="md">Delete Campaign</Button>
                     <Button colorScheme="teal" size="md">Export Data</Button> */}
                 </VStack>
+                <Box position="relative"> {/* Encapsulating Box to hold the vertical divider */}
+      <Divider orientation="vertical" height="100%" position="absolute" left={0} top={0} borderColor="gray.200" />
+      <VStack spacing={3} align="stretch" position="sticky" top={80}>
+        {/* <UploadCSVButton /> */}
+        {previewData && previewData.length? 
+                        <IconButton
+                            isRound={true}
+                            variant='solid'
+                            colorScheme='teal'
+                            aria-label='Done'
+                            fontSize='20px'
+                            icon={<CheckIcon />}
+                        /> : (
+                    <FormControl> 
+                  <Input
+                    className="hidden"
+                    type="file"
+                    accept=".csv"
+                    value=""
+                    onChange={async (event) => {
+                      try {
+                        const text = await event.target.files?.[0]?.text();
+                        console.log("text",text)
+
+                        const cols = text
+                          ?.split("\n")[0]
+                          .split(",")
+                          .map((c) => c.replace("\r", "").trim());
+
+                        const contributorAdrIndex = cols?.findIndex(
+                          (v) => v === COLUMNS.CONTRIBUTOR_USERNAME
+                        );
+                        const viewsIndex = cols?.findIndex(
+                          (v) => v === COLUMNS.VIEWS
+                        );
+                        const likesIndex = cols?.findIndex(
+                            (v) => v === COLUMNS.LIKES
+                          );
+
+                        if (
+                          contributorAdrIndex === undefined ||
+                          viewsIndex === undefined
+                        ) {
+                            console.log("1")
+                          setPreviewData([]);
+                          // @ts-expect-error - Component prop typing issue
+                        //   form?.setError("pointsData", {
+                        //     message: "Required columns not found.",
+                        //   });
+
+                          return;
+                        }
+                        console.log("2")
+                        const data = (text?.split("\n") || [])
+                          .map((line) => {
+                            const cols = line.split(",");
+
+                            const contributorData = {
+                              contributor: cols[contributorAdrIndex].trim(),
+                              views: Number(cols[viewsIndex].trim()),
+                              likes: Number(cols[likesIndex].trim()),
+                            };
+                            console.log("3")
+                            // validate
+                            if (
+                              contributorData.contributor &&
+                              contributorData.contributor
+                                .trim()
+                                .startsWith("") &&
+                            //   isAddress(contributorData.contributor) &&
+                              contributorData.views >= 0
+                            ) {
+                                console.log("4")
+                                // setPreviewData(data);
+                                console.log("contributordata", contributorData)
+                              return contributorData;
+                            }
+
+                            return undefined;
+                          })
+                          .filter(Boolean) as unknown as Array<ContributorData>;
+                          setPreviewData(data);
+                          console.log("e")
+                        if (!data.length) {
+                            console.log("5")
+                          setPreviewData([]);
+                          // @ts-expect-error - Component prop typing issue
+                        //   form?.setError("pointsData", {
+                        //     message: "No contributor data found.",
+                        //   });
+
+                          return;
+                        }
+
+                        // @ts-expect-error - Component prop typing issue
+                        // form?.clearErrors("pointsData");
+                        console.log("6data")
+                        setPreviewData(data);
+                        // onChange(data);
+                      } catch (err) {
+                        // setPreviewData([]);
+                        // @ts-expect-error - Component prop typing issue
+                        // form?.setError("pointsData", {
+                        //   message: "Unable to parse contributor data.",
+                        // });
+                      }
+                    }}
+                  />
+                </FormControl>
+                )}
+                <Button colorScheme="teal" size="md" onClick={upload}>Upload CSV</Button>
+        <DownloadDataButton 
+          campaignStart={0} 
+          campaignEnd={0} 
+          viewExponent={0} 
+          minFollowers={0} 
+          minImpressions={0} 
+          maxMentions={0} 
+          targetUserId={0} 
+        />
+        <Button colorScheme="teal" size="md" width="full">Settle Campaign</Button>
+      </VStack>
+    </Box>
+                {/* <VStack spacing={3}  top={40} >
+                    <WalletManager/>
+                    {previewData && previewData.length? 
+                        <IconButton
+                            isRound={true}
+                            variant='solid'
+                            colorScheme='teal'
+                            aria-label='Done'
+                            fontSize='20px'
+                            icon={<CheckIcon />}
+                        /> : (
+                    <FormControl> 
+                  <Input
+                    className="hidden"
+                    type="file"
+                    accept=".csv"
+                    value=""
+                    onChange={async (event) => {
+                      try {
+                        const text = await event.target.files?.[0]?.text();
+                        console.log("text",text)
+
+                        const cols = text
+                          ?.split("\n")[0]
+                          .split(",")
+                          .map((c) => c.replace("\r", "").trim());
+
+                        const contributorAdrIndex = cols?.findIndex(
+                          (v) => v === COLUMNS.CONTRIBUTOR_USERNAME
+                        );
+                        const pointsIndex = cols?.findIndex(
+                          (v) => v === COLUMNS.points
+                        );
+
+                        if (
+                          contributorAdrIndex === undefined ||
+                          pointsIndex === undefined
+                        ) {
+                            console.log("1")
+                          setPreviewData([]);
+                          // @ts-expect-error - Component prop typing issue
+                        //   form?.setError("pointsData", {
+                        //     message: "Required columns not found.",
+                        //   });
+
+                          return;
+                        }
+                        console.log("2")
+                        const data = (text?.split("\n") || [])
+                          .map((line) => {
+                            const cols = line.split(",");
+
+                            const contributorData = {
+                              contributor: cols[contributorAdrIndex].trim(),
+                              point: Number(cols[pointsIndex].trim()),
+                            };
+                            console.log("3")
+                            // validate
+                            if (
+                              contributorData.contributor &&
+                              contributorData.contributor
+                                .trim()
+                                .startsWith("") &&
+                            //   isAddress(contributorData.contributor) &&
+                              contributorData.point >= 0
+                            ) {
+                                console.log("4")
+                              return contributorData;
+                            }
+
+                            return undefined;
+                          })
+                          .filter(Boolean) as unknown as Array<ContributorData>;
+
+                        if (!data.length) {
+                          setPreviewData([]);
+                          // @ts-expect-error - Component prop typing issue
+                        //   form?.setError("pointsData", {
+                        //     message: "No contributor data found.",
+                        //   });
+
+                          return;
+                        }
+
+                        // @ts-expect-error - Component prop typing issue
+                        // form?.clearErrors("pointsData");
+                        setPreviewData(data);
+                        // onChange(data);
+                      } catch (err) {
+                        // setPreviewData([]);
+                        // @ts-expect-error - Component prop typing issue
+                        // form?.setError("pointsData", {
+                        //   message: "Unable to parse contributor data.",
+                        // });
+                      }
+                    }}
+                  />
+                </FormControl>
+                )}
+                <Button colorScheme="teal" size="md" onClick={upload}>Upload CSV</Button>
+                    <Button colorScheme="teal" size="md">Distribute Rewards</Button>
+                    {/* <Button colorScheme="teal" size="md">Delete Campaign</Button>
+                    <Button colorScheme="teal" size="md">Export Data</Button> */}
+                {/* </VStack> */} 
             </HStack>
         </Box>
     );

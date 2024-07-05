@@ -1,7 +1,7 @@
 // WalletManager.tsx
 "use client";
 import React from "react";
-import { useAccount, useConnect, useDisconnect, Connector } from "@starknet-react/core";
+import { useAccount, useConnect, useDisconnect, Connector, useNetwork } from "@starknet-react/core";
 import {
   Box,
   Button,
@@ -19,6 +19,9 @@ import {
 export default function WalletManager() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { address } = useAccount();
+  // const {
+  //   chain: { name: chainName },
+  // } = useNetwork();
   const { connect, connectors } = useConnect();
   const { disconnect } = useDisconnect();
   
