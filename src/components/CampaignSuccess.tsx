@@ -3,8 +3,10 @@ import Link from "next/link";
 import React from "react";
 import { LuPartyPopper } from "react-icons/lu";
 
-
-export default function CampaignSuccess() {
+interface CampaignSuccessProps {
+  id: string;
+}
+export default function CampaignSuccess({id}: CampaignSuccessProps) {
   return (
     <Flex
       direction="column"
@@ -46,7 +48,7 @@ export default function CampaignSuccess() {
             Here's your campaign ID:
         </Text>
         <Text fontWeight={"medium"}>
-            123780
+            {id}
         </Text>
       </VStack>
     </Flex>

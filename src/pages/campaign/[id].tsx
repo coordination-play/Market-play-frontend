@@ -6,6 +6,8 @@ import DownloadDataButton from '../../components/DownloadCSV';
 import UploadCSVButton from '../../components/UploadCSV';
 import { useAccount } from "@starknet-react/core";
 import Header from "../../components/Header";
+import dayjs from "dayjs";
+
 
 import { OrganisationABI, RegistryABI, CONTRACTS_ADDRESSES } from "../../contracts/contracts";
 import {
@@ -24,6 +26,7 @@ export default function CampaignDetails() {
     const id = router.query.id;
 
     const [previewData, setPreviewData] = useState<ContributorData[]>([]);
+    const [ended, setIsEnded] = useState<Boolean>(false);
     const COLUMNS = {
         CONTRIBUTOR_USERNAME: "contributor_username",
         VIEWS: "views",
@@ -49,6 +52,14 @@ export default function CampaignDetails() {
         address: CONTRACTS_ADDRESSES.ORGANISATION,
         functionName: "owner",
         args: [],
+        watch: true,
+    });
+
+    const { data: data3, isLoading: isLoading3 } = useContractRead({
+        abi: OrganisationABI,
+        address: CONTRACTS_ADDRESSES.ORGANISATION,
+        functionName: "get_campaign_reward",
+        args: [address, id],
         watch: true,
     });
 
@@ -86,13 +97,29 @@ export default function CampaignDetails() {
         return address ? `0x${address.slice(0, 6)}...${address.slice(-4)}` : null;
     }
 
-    // useEffect(() => {
-    //     // console.log("data2",previewData, data2.toString(16))
-    //     if (address && data2) {
-    //         console.log("data2")
-    //     }
+    const getDaysInfo = (endDate) => {
+        const now = dayjs();
+        const end = dayjs(unixTimestampToDate(endDate));
+        if (now.isBefore(end)) {
+            setIsEnded(false)
+        } else {
+            setIsEnded(true);
+        }
+    };
+    useEffect(() => {
+        if (address && data&& data3) {
+            console.log("data", data3)
+        }
+        //     const now = dayjs();
+        // const end = dayjs(unixTimestampToDate(data.duration.toString()));
+        // if (now.isBefore(end)) {
+        //     setIsEnded(false)
+        // } else {
+        //     setIsEnded(true);
+        // }
+        // }
         
-    //   }, [isLoading2, address])
+      }, [isLoading3, address])
 
       type ContributorData = {
         user: string;
@@ -113,9 +140,9 @@ export default function CampaignDetails() {
         tokenAllocation: 100000,
         campaignStart: "2023-09-01", // in datetime type
         campaignEnd: "2023-09-30",  // in datatime type
-        minFollowers: 0.35,
-        minImpressions: 1.25,
-        maxMentions: 1.75,
+        minFollowers: 20,
+        minImpressions: 50,
+        maxMentions: 4,
         viewExponent: 4,
         twitterId: 12222222
     };
@@ -235,6 +262,36 @@ export default function CampaignDetails() {
                                 <Text>{campaignData.twitterId}</Text>
                             </GridItem>
                         </SimpleGrid>
+                        {/* {ended? 
+                        <div>
+                        <Divider my={4} />
+                        <Heading fontSize="lg" fontWeight="semibold" alignSelf="flex-start" color={"blue.600"}>
+                            leaderboard
+                        </Heading>
+                        <SimpleGrid columns={{ base: 1, md: 3 }} w="full" p={4} bg="white" _dark={{ bg: "gray.700" }} rounded="md" shadow="base">
+                            <GridItem>
+                                <Text fontWeight="bold">Min Followers</Text>
+                                <Text>{campaignData.minFollowers}</Text>
+                            </GridItem>
+                            <GridItem>
+                                <Text fontWeight="bold">Min Impressions</Text>
+                                <Text>{campaignData.minImpressions}</Text>
+                            </GridItem>
+                            <GridItem>
+                                <Text fontWeight="bold">Max Mentions</Text>
+                                <Text>{campaignData.maxMentions}</Text>
+                            </GridItem>
+                            <GridItem>
+                                <Text fontWeight="bold">View Exponent</Text>
+                                <Text>{campaignData.viewExponent}</Text>
+                            </GridItem>
+                            <GridItem>
+                                <Text fontWeight="bold">Twitter Account Id</Text>
+                                <Text>{campaignData.twitterId}</Text>
+                            </GridItem>
+                        </SimpleGrid>
+                        </div>
+                        : (<></>)}  */}
                         </div>
                     )}
                     </VStack>
@@ -373,10 +430,14 @@ export default function CampaignDetails() {
           targetUserId={0} 
         />
         <Button colorScheme="teal" size="md" width="full">Settle Campaign</Button>
-        <Button colorScheme="teal" size="md" width="full">Claim</Button>
+        {/* <Button colorScheme="teal" size="md" width="full">Claim</Button> */}
       </VStack>)
         : (<VStack spacing={3} align="stretch" position="sticky" top={50}>
-        <Button colorScheme="teal" size="md" width="full">Claim</Button></VStack>):
+            {data3? <div><Text>Claimable Reward = {data3[0].toString()}</Text>
+            <Button colorScheme="teal" size="md" width="full">Claim</Button>
+            </div>: (<></>)}
+        
+        </VStack>):
         <></>}
             </HStack>
         </Box>

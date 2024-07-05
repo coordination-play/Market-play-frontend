@@ -30,7 +30,7 @@ export default function Form() {
           {
             loading: "Creating campaign...",
             success: () => {
-              router.push('/campaignSuccess');
+              router.push(`/campaignSuccess/${3}`);
               return `Successfully added funds to campaign ${values.name} . Data can take couple minutes to reflect`;
             },
             finally: () => {
