@@ -6,7 +6,10 @@ import WalletManager from "./ConnectWallet";
 import DownloadDataButton from "./DownloadCSV";
 import UploadCSVButton from "./UploadCSV";
 import { useAccount } from "@starknet-react/core";
+<<<<<<< Updated upstream
 import WalletManager from "./ConnectWallet";
+=======
+>>>>>>> Stashed changes
 import { OrganisationABI, RegistryABI, CONTRACTS_ADDRESSES } from "../contracts/contracts";
 import {
     UseContractReadResult,
@@ -17,6 +20,10 @@ import { CheckIcon } from "@chakra-ui/icons";
 
 
 export default function CampaignDetails() {
+<<<<<<< Updated upstream
+=======
+    const { account, address, status } = useAccount();
+>>>>>>> Stashed changes
     // Dummy data for demonstration
     const [previewData, setPreviewData] = useState<ContributorData[]>([]);
     const COLUMNS = {
@@ -82,6 +89,11 @@ export default function CampaignDetails() {
       };
       
     const campaignData = {
+<<<<<<< Updated upstream
+=======
+        campaignId: "0x988923478237498230498234802384902384093843498092384",
+
+>>>>>>> Stashed changes
         campaignName: "Spring Awareness",
         campaignDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu auctor lorem, a dapibus felis. Aliquam purus quam, faucibus vel lacus et, interdum pharetra risus. Donec tempus ipsum a eleifend pulvinar. Nulla facilisi. In hac habitasse platea dictumst. Phasellus aliquam elit ut consectetur sodales. Nulla facilisi. Nam risus odio, volutpat vel semper non, finibus eget diam. Quisque et euismod magna. Praesent volutpat velit ac ex gravida finibus. Donec neque dolor, lacinia eu sem sed, convallis pharetra tortor. In faucibus orci sed diam ultrices vehicula. Duis porta arcu at purus sagittis consequat. Ut nec pulvinar ipsum. Maecenas eget dui non urna bibendum lacinia.",
         tokenAddress: "0x04730a1c577be4d4d4752b18e71b1fefbb91239cc4967ec2dbd89347e0e99bd9",
@@ -90,7 +102,16 @@ export default function CampaignDetails() {
         campaignEnd: "2023-09-30",
         likeWeight: "0.35",
         retweetWeight: "1.25",
+<<<<<<< Updated upstream
         bookmarkWeight: "1.75"
+=======
+        bookmarkWeight: "1.75",
+        minFollowers: 0.35,
+        minImpressions: 1.25,
+        maxMentions: 1.75,
+        viewExponent:  4,
+        twitterId: 12222222
+>>>>>>> Stashed changes
     };
 
     const UsernameToaddressMapping = {
@@ -162,8 +183,14 @@ export default function CampaignDetails() {
                         </Heading>
                         <SimpleGrid columns={{ base: 1, md: 3 }} w="full" p={4} bg="white" _dark={{ bg: "gray.700" }} rounded="md" shadow="base">
                             <GridItem>
+<<<<<<< Updated upstream
                                 <Text fontWeight="bold">Like Weight:</Text>
                                 <Text>{campaignData.likeWeight}</Text>
+=======
+                                
+                            <Text fontWeight="bold">Min Followers</Text>
+                                <Text>{campaignData.minFollowers}</Text>
+>>>>>>> Stashed changes
                             </GridItem>
                             <GridItem>
                                 <Text fontWeight="bold">Retweet Weight:</Text>
