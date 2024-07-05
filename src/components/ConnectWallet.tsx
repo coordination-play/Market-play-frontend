@@ -26,7 +26,7 @@ export default function WalletManager() {
 
   return (
     <Box w="full" p={4}>
-      <Button onClick={onOpen} variant="solid" alignSelf={"stretch"} size={"md"} colorScheme={"teal"}>
+      <Button onClick={onOpen} variant="solid" alignSelf={"stretch"} size={"md"} colorScheme={"teal"} >
         {address ? `Disconnect Wallet: ${addressShort}` : "Connect Wallet"}
       </Button>
       

@@ -2,6 +2,8 @@ import { Box, SimpleGrid, GridItem, Text, Heading, VStack, Divider, HStack, Butt
 import React from "react";
 import { AiOutlineFileText  } from "react-icons/ai";
 import WalletManager from "./ConnectWallet";
+import DownloadDataButton from "./DownloadCSV";
+import UploadCSVButton from "./UploadCSV";
 
 export default function CampaignDetails() {
     // Dummy data for demonstration
@@ -86,13 +88,22 @@ export default function CampaignDetails() {
                         </SimpleGrid>
                     </VStack>
                 </VStack>
-                <VStack spacing={3} align="stretch" position="sticky" top={40} >
-                    <WalletManager/>
-                    <Button colorScheme="teal" size="md">Upload CSV</Button>
-                    <Button colorScheme="teal" size="md">Distribute Rewards</Button>
-                    <Button colorScheme="teal" size="md">Download CSV</Button>
-                    <Button colorScheme="teal" size="md">Settle Campaign</Button>
-                </VStack>
+                <Box position="relative"> {/* Encapsulating Box to hold the vertical divider */}
+      <Divider orientation="vertical" height="100%" position="absolute" left={0} top={0} borderColor="gray.200" />
+      <VStack spacing={3} align="stretch" position="sticky" top={80}>
+        <UploadCSVButton />
+        <DownloadDataButton 
+          campaignStart={0} 
+          campaignEnd={0} 
+          viewExponent={0} 
+          minFollowers={0} 
+          minImpressions={0} 
+          maxMentions={0} 
+          targetUserId={0} 
+        />
+        <Button colorScheme="teal" size="md" width="full">Settle Campaign</Button>
+      </VStack>
+    </Box>
             </HStack>
         </Box>
     );
