@@ -9,7 +9,7 @@ import {
     UseContractReadResult,
     useContractRead
   } from "@starknet-react/core";
-
+  import { useRouter } from 'next/router';
 
 
 
@@ -72,7 +72,12 @@ const campaigns = [
 
 export default function CampaignList() {
     const bg = useColorModeValue("white", "gray.800");
+    const router = useRouter();
 
+    const handleViewClick = (id) => {
+        console.log("ss", id)
+        router.push(`/campaign/${id}`);
+    };
     const { data: data, isLoading, isError, isSuccess, error } = useContractRead({
         abi: OrganisationABI,
         address: CONTRACTS_ADDRESSES.ORGANISATION,
@@ -153,13 +158,13 @@ export default function CampaignList() {
           ) : (
             <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6} mt={6}  px={5} justifyContent="center" alignItems="center">
                 {data[1].map((campaign, i) => (
-                    <Stack key={i} bg={bg} p={4} rounded="lg" shadow="base" spacing={4} w="100%" maxWidth="400px">
+                    <Stack key={i+1} bg={bg} p={4} rounded="lg" shadow="base" spacing={4} w="100%" maxWidth="400px">
                         <HStack justifyContent="space-between" alignItems="center">
                             <HStack>
                                 <RiBardFill size={30} color="gold" />
                                 <Text fontSize="xl" fontWeight="bold">{bigIntToWords(campaign.name)}</Text>
                             </HStack>
-                            <Button size="sm" colorScheme="teal">View</Button>
+                            <Button size="sm" onClick={() => handleViewClick(i+1)} colorScheme="teal">View</Button>
                         </HStack>
                         <Text>Token Allotted: {campaign.token_amount.toString()} USDC</Text>
                         <Text color="blue.500">{getDaysInfo(Number(campaign.start_time),Number(campaign.duration))}</Text>

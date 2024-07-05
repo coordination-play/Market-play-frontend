@@ -42,6 +42,16 @@ export default function CampaignDetails() {
         watch: true,
     });
 
+    const { data: data2, isLoading: isLoading2 } = useContractRead({
+        abi: OrganisationABI,
+        address: CONTRACTS_ADDRESSES.ORGANISATION,
+        functionName: "owner",
+        args: [],
+        watch: true,
+    });
+
+
+
     function unixTimestampToDate(unixTimestamp: number): string {
         // Create a new Date object using the Unix timestamp (in milliseconds)
         const date = new Date(unixTimestamp * 1000);
@@ -77,12 +87,15 @@ export default function CampaignDetails() {
     }
 
     useEffect(() => {
-        console.log("data2",previewData)
-        if (previewData) {
-
+        // console.log("data2",previewData, data2.toString(16))
+        if (address && data2) {
+            console.log("data2")
+            console.log(address.substring(2,128).toLocaleLowerCase())
+            console.log(address.substring(2,128).toLocaleLowerCase() == data2.toString(16).toLocaleLowerCase())
+            console.log(data2.toString(16).toLocaleLowerCase())
         }
         
-      }, [isLoading, previewData])
+      }, [isLoading2, address])
 
       type ContributorData = {
         user: string;
@@ -232,132 +245,133 @@ export default function CampaignDetails() {
                 {/* </VStack> */}
                 <Box position="relative"> {/* Encapsulating Box to hold the vertical divider */}
       <Divider orientation="vertical" height="100%" position="absolute" left={0} top={0} borderColor="gray.200" />
-      <VStack spacing={3}  top={80}>
+      {/* <VStack spacing={3} top={80}> */}
         {/* <UploadCSVButton /> */}
-        {previewData && previewData.length? 
-                        <IconButton
-                            isRound={true}
-                            variant='solid'
-                            colorScheme='teal'
-                            aria-label='Done'
-                            fontSize='20px'
-                            icon={<CheckIcon />}
-                        /> : (
-                    <FormControl> 
-                  <Input
-                    className="hidden"
-                    type="file"
-                    accept=".csv"
-                    value=""
-                    onChange={async (event) => {
-                      try {
-                        const text = await event.target.files?.[0]?.text();
-                        console.log("text",text)
+        {data2 && address ? data2.toString(16).toLocaleLowerCase() == address.substring(2,128).toLocaleLowerCase() ? 
+        (<VStack spacing={3} top={80}> {previewData && previewData.length? 
+            <IconButton
+                isRound={true}
+                variant='solid'
+                colorScheme='teal'
+                aria-label='Done'
+                fontSize='20px'
+                icon={<CheckIcon />}
+            /> : (
+        <FormControl> 
+      <Input
+        className="hidden"
+        type="file"
+        accept=".csv"
+        value=""
+        onChange={async (event) => {
+          try {
+            const text = await event.target.files?.[0]?.text();
+            console.log("text",text)
 
-                        const cols = text
-                          ?.split("\n")[0]
-                          .split(",")
-                          .map((c) => c.replace("\r", "").trim());
+            const cols = text
+              ?.split("\n")[0]
+              .split(",")
+              .map((c) => c.replace("\r", "").trim());
 
-                        const contributorAdrIndex = cols?.findIndex(
-                          (v) => v === COLUMNS.CONTRIBUTOR_USERNAME
-                        );
-                        const viewsIndex = cols?.findIndex(
-                          (v) => v === COLUMNS.VIEWS
-                        );
-                        const likesIndex = cols?.findIndex(
-                            (v) => v === COLUMNS.LIKES
-                        );
-                        const repliesIndex = cols?.findIndex(
-                            (v) => v === COLUMNS.REPLIES
-                        );
-                        const retweetsIndex = cols?.findIndex(
-                            (v) => v === COLUMNS.RETWEETS
-                        );
-                        const followersIndex = cols?.findIndex(
-                            (v) => v === COLUMNS.FOLLOWERS
-                        );
-                        const mentionsIndex = cols?.findIndex(
-                            (v) => v === COLUMNS.MENTIONS
-                        );
+            const contributorAdrIndex = cols?.findIndex(
+              (v) => v === COLUMNS.CONTRIBUTOR_USERNAME
+            );
+            const viewsIndex = cols?.findIndex(
+              (v) => v === COLUMNS.VIEWS
+            );
+            const likesIndex = cols?.findIndex(
+                (v) => v === COLUMNS.LIKES
+            );
+            const repliesIndex = cols?.findIndex(
+                (v) => v === COLUMNS.REPLIES
+            );
+            const retweetsIndex = cols?.findIndex(
+                (v) => v === COLUMNS.RETWEETS
+            );
+            const followersIndex = cols?.findIndex(
+                (v) => v === COLUMNS.FOLLOWERS
+            );
+            const mentionsIndex = cols?.findIndex(
+                (v) => v === COLUMNS.MENTIONS
+            );
 
-                        if (
-                          contributorAdrIndex === undefined ||
-                          viewsIndex === undefined
-                        ) {
-                            console.log("1")
-                          setPreviewData([]);
-                          // @ts-expect-error - Component prop typing issue
-                        //   form?.setError("pointsData", {
-                        //     message: "Required columns not found.",
-                        //   });
+            if (
+              contributorAdrIndex === undefined ||
+              viewsIndex === undefined
+            ) {
+                console.log("1")
+              setPreviewData([]);
+              // @ts-expect-error - Component prop typing issue
+            //   form?.setError("pointsData", {
+            //     message: "Required columns not found.",
+            //   });
 
-                          return;
-                        }
-                        console.log("2")
-                        const data = (text?.split("\n") || [])
-                          .map((line) => {
-                            const cols = line.split(",");
+              return;
+            }
+            console.log("2")
+            const data = (text?.split("\n") || [])
+              .map((line) => {
+                const cols = line.split(",");
 
-                            const contributorData = {
-                              user: cols[contributorAdrIndex].trim(),
-                              views: Number(cols[viewsIndex].trim()),
-                              likes: Number(cols[likesIndex].trim()),
-                              reply: Number(cols[repliesIndex].trim()),
-                              retweet: Number(cols[retweetsIndex].trim()),
-                              followers: Number(cols[followersIndex].trim()),
-                              mentions: Number(cols[mentionsIndex].trim()),
-                            };
-                            console.log("3")
-                            // validate
-                            if (
-                              contributorData.user &&
-                              contributorData.user
-                                .trim()
-                                .startsWith("") &&
-                            //   isAddress(contributorData.contributor) &&
-                              contributorData.views >= 0
-                            ) {
-                                console.log("4")
-                                // setPreviewData(data);
-                                console.log("contributordata", contributorData)
-                              return contributorData;
-                            }
+                const contributorData = {
+                  user: cols[contributorAdrIndex].trim(),
+                  views: Number(cols[viewsIndex].trim()),
+                  likes: Number(cols[likesIndex].trim()),
+                  reply: Number(cols[repliesIndex].trim()),
+                  retweet: Number(cols[retweetsIndex].trim()),
+                  followers: Number(cols[followersIndex].trim()),
+                  mentions: Number(cols[mentionsIndex].trim()),
+                };
+                console.log("3")
+                // validate
+                if (
+                  contributorData.user &&
+                  contributorData.user
+                    .trim()
+                    .startsWith("") &&
+                //   isAddress(contributorData.contributor) &&
+                  contributorData.views >= 0
+                ) {
+                    console.log("4")
+                    // setPreviewData(data);
+                    console.log("contributordata", contributorData)
+                  return contributorData;
+                }
 
-                            return undefined;
-                          })
-                          .filter(Boolean) as unknown as Array<ContributorData>;
-                          setPreviewData(data);
-                          console.log("e")
-                        if (!data.length) {
-                            console.log("5")
-                          setPreviewData([]);
-                          // @ts-expect-error - Component prop typing issue
-                        //   form?.setError("pointsData", {
-                        //     message: "No contributor data found.",
-                        //   });
+                return undefined;
+              })
+              .filter(Boolean) as unknown as Array<ContributorData>;
+              setPreviewData(data);
+              console.log("e")
+            if (!data.length) {
+                console.log("5")
+              setPreviewData([]);
+              // @ts-expect-error - Component prop typing issue
+            //   form?.setError("pointsData", {
+            //     message: "No contributor data found.",
+            //   });
 
-                          return;
-                        }
+              return;
+            }
 
-                        // @ts-expect-error - Component prop typing issue
-                        // form?.clearErrors("pointsData");
-                        console.log("6data")
-                        setPreviewData(data);
-                        // onChange(data);
-                      } catch (err) {
-                        // setPreviewData([]);
-                        // @ts-expect-error - Component prop typing issue
-                        // form?.setError("pointsData", {
-                        //   message: "Unable to parse contributor data.",
-                        // });
-                      }
-                    }}
-                  />
-                </FormControl>
-                )}
-                <Button colorScheme="teal" size="md" onClick={upload}>Upload CSV</Button>
-        <DownloadDataButton 
+            // @ts-expect-error - Component prop typing issue
+            // form?.clearErrors("pointsData");
+            console.log("6data")
+            setPreviewData(data);
+            // onChange(data);
+          } catch (err) {
+            // setPreviewData([]);
+            // @ts-expect-error - Component prop typing issue
+            // form?.setError("pointsData", {
+            //   message: "Unable to parse contributor data.",
+            // });
+          }
+        }}
+      />
+    </FormControl>
+    )}
+    <Button colorScheme="teal" size="md" onClick={upload}>Upload CSV</Button> 
+    <DownloadDataButton 
           campaignStart={0} 
           campaignEnd={0} 
           viewExponent={0} 
@@ -367,7 +381,14 @@ export default function CampaignDetails() {
           targetUserId={0} 
         />
         <Button colorScheme="teal" size="md" width="full">Settle Campaign</Button>
-      </VStack>
+        <Button colorScheme="teal" size="md" width="full">Claim</Button>
+      </VStack>)
+        : (<><Button colorScheme="teal" size="md" width="full">Claim</Button></>):
+        <></>}
+         
+         
+        
+        
     </Box>
                 {/* <VStack spacing={3}  top={40} >
                     <WalletManager/>
