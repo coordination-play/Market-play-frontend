@@ -19,6 +19,7 @@ import {
   import { useWriteOrganisationContract } from "../../contracts/write";
 import { toast } from "sonner";
 import { CheckIcon } from '@chakra-ui/icons';
+import DownloadLocalCSVButton from '../../components/DownloadFile';
 
 export default function CampaignDetails() {
     const { account, address, status } = useAccount();
