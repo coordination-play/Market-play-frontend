@@ -9,12 +9,14 @@ export default function CampaignDetails() {
         campaignName: "Spring Awareness",
         campaignDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eu auctor lorem, a dapibus felis. Aliquam purus quam, faucibus vel lacus et, interdum pharetra risus. Donec tempus ipsum a eleifend pulvinar. Nulla facilisi. In hac habitasse platea dictumst. Phasellus aliquam elit ut consectetur sodales. Nulla facilisi. Nam risus odio, volutpat vel semper non, finibus eget diam. Quisque et euismod magna. Praesent volutpat velit ac ex gravida finibus. Donec neque dolor, lacinia eu sem sed, convallis pharetra tortor. In faucibus orci sed diam ultrices vehicula. Duis porta arcu at purus sagittis consequat. Ut nec pulvinar ipsum. Maecenas eget dui non urna bibendum lacinia.",
         tokenAddress: "0x04730a1c577be4d4d4752b18e71b1fefbb91239cc4967ec2dbd89347e0e99bd9",
-        tokenAllocation: "100,000 USDC",
-        campaignStart: "2023-09-01",
-        campaignEnd: "2023-09-30",
-        likeWeight: "0.35",
-        retweetWeight: "1.25",
-        bookmarkWeight: "1.75"
+        tokenAllocation: 100000,
+        campaignStart: "2023-09-01", // in datetime type
+        campaignEnd: "2023-09-30",  // in datatime type
+        minFollowers: 0.35,
+        minImpressions: 1.25,
+        maxMentions: 1.75,
+        viewExponent:  4,
+        twitterID: 12222222
     };
 
     return (
@@ -62,16 +64,24 @@ export default function CampaignDetails() {
                         </Heading>
                         <SimpleGrid columns={{ base: 1, md: 3 }} w="full" p={4} bg="white" _dark={{ bg: "gray.700" }} rounded="md" shadow="base">
                             <GridItem>
-                                <Text fontWeight="bold">Like Weight:</Text>
-                                <Text>{campaignData.likeWeight}</Text>
+                                <Text fontWeight="bold">Min Followers</Text>
+                                <Text>{campaignData.minFollowers}</Text>
                             </GridItem>
                             <GridItem>
                                 <Text fontWeight="bold">Retweet Weight:</Text>
-                                <Text>{campaignData.retweetWeight}</Text>
+                                <Text>{campaignData.minImpressions}</Text>
                             </GridItem>
                             <GridItem>
                                 <Text fontWeight="bold">Bookmark Weight:</Text>
-                                <Text>{campaignData.bookmarkWeight}</Text>
+                                <Text>{campaignData.maxMentions}</Text>
+                            </GridItem>
+                            <GridItem>
+                                <Text fontWeight="bold">Bookmark Weight:</Text>
+                                <Text>{campaignData.viewExponent}</Text>
+                            </GridItem>
+                            <GridItem>
+                                <Text fontWeight="bold">Bookmark Weight:</Text>
+                                <Text>{campaignData.twitterID}</Text>
                             </GridItem>
                         </SimpleGrid>
                     </VStack>
