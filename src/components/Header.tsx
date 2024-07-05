@@ -375,8 +375,9 @@ export default function Header() {
                   >
                     View Campaigns
                   </Link>
-                  <Button
+                  <Link
                     bg={bg}
+                    href="/claim"
                     display="inline-flex"
                     alignItems="center"
                     fontSize="md"
@@ -388,7 +389,7 @@ export default function Header() {
                     }}
                   >
                     Claim
-                  </Button>
+                  </Link>
                 </HStack>
               </Flex>
               <Spacer />

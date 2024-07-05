@@ -27,6 +27,11 @@ export default function CampaignDetails() {
         CONTRIBUTOR_USERNAME: "contributor_username",
         VIEWS: "views",
         LIKES: "likes",
+        REPLIES: "replies",
+        RETWEETS: "retweets",
+        FOLLOWERS: "followers",
+        MENTIONS: "mentions",
+
       } as const;
 
     const { data: data, isLoading, isError, isSuccess, error } = useContractRead({
@@ -80,9 +85,13 @@ export default function CampaignDetails() {
       }, [isLoading, previewData])
 
       type ContributorData = {
-        contributor: string;
+        user: string;
         likes: number;
         views: number;
+        reply: number,
+        retweet: number,
+        followers: number,
+        mentions: number,
       };
       
     const campaignData = {
@@ -119,16 +128,16 @@ export default function CampaignDetails() {
       function upload() {
         if(!previewData) return;
         const updatedPreviewData = previewData.map(contributor => {
-          const address = UsernameToaddressMapping[contributor.contributor];
+          const address = UsernameToaddressMapping[contributor.user];
           return {
             ...contributor,
-            contributor: address || contributor.contributor // Fallback to the address if no username is found
+            user: address || contributor.user // Fallback to the address if no username is found
           };
         });
         setPreviewData(updatedPreviewData);
         console.log("Updated Preview Data:", updatedPreviewData);
         toast.promise(
-            settleCampaignMutate.writeAsyncAndWait([1, updatedPreviewData]),
+            settleCampaignMutate.writeAsyncAndWait(['1', updatedPreviewData]),
             {
               loading: "Creating campaign...",
               success: () => {
@@ -258,7 +267,19 @@ export default function CampaignDetails() {
                         );
                         const likesIndex = cols?.findIndex(
                             (v) => v === COLUMNS.LIKES
-                          );
+                        );
+                        const repliesIndex = cols?.findIndex(
+                            (v) => v === COLUMNS.REPLIES
+                        );
+                        const retweetsIndex = cols?.findIndex(
+                            (v) => v === COLUMNS.RETWEETS
+                        );
+                        const followersIndex = cols?.findIndex(
+                            (v) => v === COLUMNS.FOLLOWERS
+                        );
+                        const mentionsIndex = cols?.findIndex(
+                            (v) => v === COLUMNS.MENTIONS
+                        );
 
                         if (
                           contributorAdrIndex === undefined ||
@@ -279,15 +300,19 @@ export default function CampaignDetails() {
                             const cols = line.split(",");
 
                             const contributorData = {
-                              contributor: cols[contributorAdrIndex].trim(),
+                              user: cols[contributorAdrIndex].trim(),
                               views: Number(cols[viewsIndex].trim()),
                               likes: Number(cols[likesIndex].trim()),
+                              reply: Number(cols[repliesIndex].trim()),
+                              retweet: Number(cols[retweetsIndex].trim()),
+                              followers: Number(cols[followersIndex].trim()),
+                              mentions: Number(cols[mentionsIndex].trim()),
                             };
                             console.log("3")
                             // validate
                             if (
-                              contributorData.contributor &&
-                              contributorData.contributor
+                              contributorData.user &&
+                              contributorData.user
                                 .trim()
                                 .startsWith("") &&
                             //   isAddress(contributorData.contributor) &&
