@@ -56,13 +56,14 @@ export default function CampaignDetails() {
         watch: true,
     });
 
-    const { data: data3, isLoading: isLoading3 } = useContractRead({
+    const { data: data3, isLoading: isLoading3, refetch } = useContractRead({
         abi: OrganisationABI,
         address: CONTRACTS_ADDRESSES.ORGANISATION,
         functionName: "get_campaign_reward",
         args: [address, id],
         watch: true,
     });
+
 
     function unixTimestampToDate(unixTimestamp: number): string {
         // Create a new Date object using the Unix timestamp (in milliseconds)
@@ -94,37 +95,20 @@ export default function CampaignDetails() {
         return words.join('');
     }
 
-    function shortenAddress(address: string): string {
-        return address ? `0x${address.slice(0, 6)}...${address.slice(-4)}` : null;
-    }
+    // function shortenAddress(address: string): string {
+    //     return address ? `0x${address.slice(0, 6)}...${address.slice(-4)}` : null;
+    // }
 
-    const getDaysInfo = (endDate) => {
-        const now = dayjs();
-        const end = dayjs(unixTimestampToDate(endDate));
-        if (now.isBefore(end)) {
-            setIsEnded(false)
-        } else {
-            setIsEnded(true);
-        }
-    };
     useEffect(() => {
         if (address && data&& data3) {
-            console.log("data", data3)
+            refetch()
         }
-        //     const now = dayjs();
-        // const end = dayjs(unixTimestampToDate(data.duration.toString()));
-        // if (now.isBefore(end)) {
-        //     setIsEnded(false)
-        // } else {
-        //     setIsEnded(true);
-        // }
-        // }
         
       }, [isLoading3, address])
 
       type ContributorData = {
         user: string;
-        likes: number;
+        like: number;
         views: number;
         reply: number,
         retweet: number,
@@ -150,7 +134,7 @@ export default function CampaignDetails() {
 
     const UsernameToaddressMapping = {
         "rgoyal": "0x8b4848564df4f427120198fb1844f49e7f7ec0c12513070bbb28d10f1034e8",
-        "yashm001": "0x722f9bff02831f3b4713f70785f93d768a335f0759c4527225d40904c543e23",
+        "yashm001": "0x01057C9C3d356bCD3cCAE8bC3f9e8Fb3C570dDc37c3c51529474E1Ba88941e25",
        // Add more mappings here
      };
      const settleCampaignMutate = useWriteOrganisationContract(
@@ -172,7 +156,7 @@ export default function CampaignDetails() {
        setPreviewData(updatedPreviewData);
        console.log("Updated Preview Data:", updatedPreviewData);
        toast.promise(
-           settleCampaignMutate.writeAsyncAndWait(['1', updatedPreviewData]),
+        settleCampaignMutate.writeAsyncAndWait([id, updatedPreviewData]),
            {
              loading: "Creating campaign...",
              success: () => {
@@ -234,7 +218,7 @@ export default function CampaignDetails() {
                             </GridItem>
                             <GridItem my={3}>
                                 <Text fontWeight="bold">Campaign End:</Text>
-                                <Text>{unixTimestampToDate(data.duration.toString())}</Text>
+                                <Text>{unixTimestampToDate(data.end_time.toString())}</Text>
                             </GridItem>
                         </SimpleGrid>
                         <Divider my={4} />
@@ -366,7 +350,7 @@ export default function CampaignDetails() {
                 const contributorData = {
                   user: cols[contributorAdrIndex].trim(),
                   views: Number(cols[viewsIndex].trim()),
-                  likes: Number(cols[likesIndex].trim()),
+                  like: Number(cols[likesIndex].trim()),
                   reply: Number(cols[repliesIndex].trim()),
                   retweet: Number(cols[retweetsIndex].trim()),
                   followers: Number(cols[followersIndex].trim()),

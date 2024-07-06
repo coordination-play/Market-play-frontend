@@ -26,7 +26,7 @@ export default function Form() {
     const onSubmit = async (values) => {
         console.log(values.campaignName, values.campaignDescription, Math.floor(new Date(values.campaignStart).getTime() / 1000), Math.floor(new Date(values.campaignEnd).getTime() / 1000), values.tokenAddress, values.tokenAllocation)
         toast.promise(
-          uploadPointsMutate.writeAsyncAndWait([values.campaignName, values.campaignDescription, Math.floor(new Date(values.campaignStart).getTime() / 1000), Math.floor(new Date(values.campaignEnd).getTime() / 1000), values.tokenAddress, values.tokenAllocation, {views_weightage:1, like_weightage: 2,reply_weightage: 3,retweet_weightage: 4, followers_threshold: 5 ,max_mentions:6, target_handle: '@rgoyal'}]),
+          uploadPointsMutate.writeAsyncAndWait([values.campaignName, values.campaignDescription, Math.floor(new Date(values.campaignStart).getTime() / 1000), Math.floor(new Date(values.campaignEnd).getTime() / 1000), values.tokenAddress, values.tokenAllocation, {views_weightage:1, like_weightage: 2,reply_weightage: 3,retweet_weightage: 2, followers_threshold: 5 ,max_mentions:6}]),
           {
             loading: "Creating campaign...",
             success: () => {

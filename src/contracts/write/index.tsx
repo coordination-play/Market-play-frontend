@@ -85,8 +85,9 @@ import {
   
         // toast("Transaction in progress..");
   
-        const call = contract.populate(fnName, args as undefined);
-        const tx = await contract[fnName](call.calldata);
+        // const call = contract.populate(fnName, args as undefined);
+        const tx = await contract[fnName](...args as []);
+        // const tx = await contract[fnName](call.calldata);
         await provider.waitForTransaction(tx.transaction_hash);
   
         setState({

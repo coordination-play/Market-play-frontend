@@ -14,18 +14,31 @@
   },
   {
     "type": "struct",
+    "name": "influencer_marketing::organisation::Rules",
+    "members": [
+      { "name": "views_weightage", "type": "core::integer::u32" },
+      { "name": "like_weightage", "type": "core::integer::u32" },
+      { "name": "reply_weightage", "type": "core::integer::u32" },
+      { "name": "retweet_weightage", "type": "core::integer::u32" },
+      { "name": "followers_threshold", "type": "core::integer::u32" },
+      { "name": "max_mentions", "type": "core::integer::u32" }
+    ]
+  },
+  {
+    "type": "struct",
     "name": "influencer_marketing::organisation::Campaign",
     "members": [
       { "name": "name", "type": "core::felt252" },
       { "name": "metadata", "type": "core::felt252" },
       { "name": "start_time", "type": "core::integer::u64" },
-      { "name": "duration", "type": "core::integer::u64" },
+      { "name": "end_time", "type": "core::integer::u64" },
       { "name": "total_points_allocated", "type": "core::integer::u32" },
       {
         "name": "token_address",
         "type": "core::starknet::contract_address::ContractAddress"
       },
-      { "name": "token_amount", "type": "core::integer::u256" }
+      { "name": "token_amount", "type": "core::integer::u256" },
+      { "name": "rules", "type": "influencer_marketing::organisation::Rules" }
     ]
   },
   {
@@ -48,25 +61,18 @@
   },
   {
     "type": "struct",
-    "name": "influencer_marketing::organisation::Rules",
-    "members": [
-      { "name": "views_weightage", "type": "core::integer::u32" },
-      { "name": "like_weightage", "type": "core::integer::u32" },
-      { "name": "reply_weightage", "type": "core::integer::u32" },
-      { "name": "retweet_weightage", "type": "core::integer::u32" },
-      { "name": "followers_threshold", "type": "core::integer::u32" },
-      { "name": "max_mentions", "type": "core::integer::u32" }
-    ]
-  },
-  {
-    "type": "struct",
     "name": "influencer_marketing::organisation::ImpressionData",
     "members": [
       {
         "name": "user",
         "type": "core::starknet::contract_address::ContractAddress"
       },
-      { "name": "points", "type": "core::integer::u32" }
+      { "name": "views", "type": "core::integer::u32" },
+      { "name": "like", "type": "core::integer::u32" },
+      { "name": "reply", "type": "core::integer::u32" },
+      { "name": "retweet", "type": "core::integer::u32" },
+      { "name": "followers", "type": "core::integer::u32" },
+      { "name": "mentions", "type": "core::integer::u32" }
     ]
   },
   {
@@ -132,7 +138,7 @@
           { "name": "name", "type": "core::felt252" },
           { "name": "metadata", "type": "core::felt252" },
           { "name": "start_time", "type": "core::integer::u64" },
-          { "name": "duration", "type": "core::integer::u64" },
+          { "name": "end_time", "type": "core::integer::u64" },
           {
             "name": "token_address",
             "type": "core::starknet::contract_address::ContractAddress"
@@ -232,7 +238,7 @@
       { "name": "name", "type": "core::felt252", "kind": "data" },
       { "name": "metadata", "type": "core::felt252", "kind": "data" },
       { "name": "start_time", "type": "core::integer::u64", "kind": "data" },
-      { "name": "duration", "type": "core::integer::u64", "kind": "data" },
+      { "name": "end_time", "type": "core::integer::u64", "kind": "data" },
       {
         "name": "token_address",
         "type": "core::starknet::contract_address::ContractAddress",
