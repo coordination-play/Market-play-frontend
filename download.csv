@@ -1,0 +1,18 @@
+month,parsed_time,id,conversation_id,author_id,user,points,followers_per_retweets,n mentions,mentions,>5 mentions,truncated_text,impression_count,reply_count,retweet_count,like_count,quote_count,followers_count,following_count,tweet_count,listed_count,referenced_tweets,text,in_reply_to_user_id
+object,"datetime64[ns, UTC]",object,object,object,object,int64,object,int64,object,bool,bool,int64,int64,int64,int64,int64,int64,int64,int64,int64,object,object,object
+May,2024-05-08 04:59:22+00:00,1788071170530766994,1788071156362399785,1507010594758483982,Starknet_ZH,6,never retweeted or quoted,1,['CoordinationLab'],False,False,73,1,0,1,0,8684,596,23084,246,"[{'type': 'quoted', 'id': '1787799076890694033'}, {'type': 'replied_to', 'id': '1788071168135815664'}]","链上协作工具 @CoordinationLab
+https://t.co/obsWOIHko7",1507010594758483982
+May,2024-05-08 09:48:37+00:00,1788143963989533166,1788143701220557153,1463071986515599362,Starknet,38,337836,1,['CoordinationLab'],False,False,1258,2,1,7,0,337836,757,14703,1999,"[{'type': 'quoted', 'id': '1787799076890694033'}, {'type': 'replied_to', 'id': '1788143949397602335'}]","18. Coordination Stack 🔨
+@CoordinationLab Stack provides a toolkit focusing on finance, identity, and governance to promote efficiency and scalability for internet-native businesses.
+
+https://t.co/lYQuuuU6jj",1463071986515599362
+May,2024-05-08 09:52:08+00:00,1788144847473291277,1787901348140523855,257566015,dylankugler,0,never retweeted or quoted,6,"['Starknet', 'underware_gg', 'kamealabs', 'StarknetFndn', 'andeebtceth', 'CoordinationLab']",True,False,58,1,0,2,0,899,862,656,6,"[{'type': 'quoted', 'id': '1788143701220557153'}, {'type': 'replied_to', 'id': '1788097766381552086'}]","
+
+Here's the list from the pilot program. 
+
+https://t.co/xm1tfS6boE",890885987752058881
+May,2024-05-09 07:43:21+00:00,1788474825570418857,1788474762966278387,1507010594758483982,Starknet_ZH,7,never retweeted or quoted,1,['CoordinationLab'],False,False,84,1,0,0,0,8684,596,23084,246,"[{'type': 'quoted', 'id': '1787799076890694033'}, {'type': 'replied_to', 'id': '1788474822072385965'}]","1️⃣8️⃣ Coordination Stack
+@CoordinationLab Stack 工具包 🔧
+专注于金融、身份识别、社区治理等
+进一步提高网络原生业务效率和可扩展性
+https://t.co/ZSIdb073kd",1507010594758483982
