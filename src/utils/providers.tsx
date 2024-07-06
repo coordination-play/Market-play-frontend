@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 
-import { sepolia, Chain } from "@starknet-react/chains";
+import { sepolia, Chain, devnet } from "@starknet-react/chains";
 import {
   StarknetConfig,
   publicProvider,
@@ -36,6 +36,7 @@ export function StarknetProvider({ children }: { children: React.ReactNode }) {
           }
 
           return {
+            // nodeUrl: `http://localhost:5050/rpc`,
             nodeUrl: `https://starknet-sepolia.public.blastapi.io/rpc/v0_7`,
           };
         },
