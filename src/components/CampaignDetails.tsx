@@ -15,6 +15,7 @@ import {
 import { CheckIcon } from "@chakra-ui/icons";
 import { useWriteOrganisationContract } from "../contracts/write";
 import { toast } from "sonner";
+import DownloadLocalCSVButton from "./DownloadFile";
 
 
 
@@ -351,32 +352,24 @@ export default function CampaignDetails() {
               return;
             }
 
-            // @ts-expect-error - Component prop typing issue
-            // form?.clearErrors("pointsData");
-            console.log("6data")
-            setPreviewData(data);
-            // onChange(data);
-          } catch (err) {
-            // setPreviewData([]);
-            // @ts-expect-error - Component prop typing issue
-            // form?.setError("pointsData", {
-            //   message: "Unable to parse contributor data.",
-            // });
-          }
-        }}
-      />
-    </FormControl>
-    )}
-    <Button colorScheme="teal" size="md" onClick={upload}>Upload CSV</Button> 
-    <DownloadDataButton 
-          campaignStart={0} 
-          campaignEnd={0} 
-          viewExponent={0} 
-          minFollowers={0} 
-          minImpressions={0} 
-          maxMentions={0} 
-          targetUserId={0} 
-        />
+                        // @ts-expect-error - Component prop typing issue
+                        // form?.clearErrors("pointsData");
+                        console.log("6data")
+                        setPreviewData(data);
+                        // onChange(data);
+                      } catch (err) {
+                        // setPreviewData([]);
+                        // @ts-expect-error - Component prop typing issue
+                        // form?.setError("pointsData", {
+                        //   message: "Unable to parse contributor data.",
+                        // });
+                      }
+                    }}
+                  />
+                </FormControl>
+                )}
+                <Button colorScheme="teal" size="md" onClick={upload}>Upload CSV</Button>
+     <DownloadLocalCSVButton />
         <Button colorScheme="teal" size="md" width="full">Settle Campaign</Button>
         <Button colorScheme="teal" size="md" width="full">Claim</Button>
       </VStack>)

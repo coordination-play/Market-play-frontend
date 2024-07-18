@@ -1,5 +1,5 @@
-import { Button } from '@chakra-ui/react';
 import React from 'react';
+import { Button, Center } from '@chakra-ui/react';
 
 const DownloadLocalCSVButton: React.FC = () => {
   const handleDownload = async () => {
@@ -20,7 +20,13 @@ const DownloadLocalCSVButton: React.FC = () => {
     }
   };
 
-  return <Button colorScheme="teal" size="md" onClick={handleDownload}>Download CSV</Button>;
+  return (
+    <Center>
+      <Button colorScheme="blue" onClick={handleDownload} top={50} left={50} right={50}>
+        Download CSV
+      </Button>
+    </Center>
+  );
 };
 
 export default DownloadLocalCSVButton;
