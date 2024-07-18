@@ -62,12 +62,12 @@ dependencies:
   react-router-dom:
     specifier: ^6.24.1
     version: 6.24.1(react-dom@18.3.1)(react@18.3.1)
-  sonner:
-    specifier: ^1.5.0
-    version: 1.5.0(react-dom@18.3.1)(react@18.3.1)
   redis:
     specifier: ^4.6.15
     version: 4.6.15
+  sonner:
+    specifier: ^1.5.0
+    version: 1.5.0(react-dom@18.3.1)(react@18.3.1)
   starknet:
     specifier: ^5.25.0
     version: 5.25.0
@@ -3139,16 +3139,6 @@ packages:
       loose-envify: 1.4.0
     dev: false
 
-  /sonner@1.5.0(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-FBjhG/gnnbN6FY0jaNnqZOMmB73R+5IiyYAw8yBj7L54ER7HB3fOSE5OFiQiE2iXWxeXKvg6fIP4LtVppHEdJA==}
-    peerDependencies:
-      react: ^18.0.0
-      react-dom: ^18.0.0
-    dependencies:
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-    dev: false
-
   /send@0.6.0:
     resolution: {integrity: sha512-A3EwHmDwcPcmLxIRNjr2YbXiYWq6M9JyUq4303pLKVFs4m5oeME0a9Cpcu9N22fED5XVepldjPYGo9eJifb7Yg==}
     engines: {node: '>= 0.8.0'}
@@ -3247,6 +3237,16 @@ packages:
       - bufferutil
       - supports-color
       - utf-8-validate
+    dev: false
+
+  /sonner@1.5.0(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-FBjhG/gnnbN6FY0jaNnqZOMmB73R+5IiyYAw8yBj7L54ER7HB3fOSE5OFiQiE2iXWxeXKvg6fIP4LtVppHEdJA==}
+    peerDependencies:
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
     dev: false
 
   /source-map-js@1.2.0:

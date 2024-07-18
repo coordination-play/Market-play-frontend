@@ -19,6 +19,7 @@ import {
   import { useWriteOrganisationContract } from "../../contracts/write";
 import { toast } from "sonner";
 import { CheckIcon } from '@chakra-ui/icons';
+import DownloadLocalCSVButton from '../../components/DownloadFile';
 
 export default function CampaignDetails() {
     const { account, address, status } = useAccount();
@@ -281,7 +282,7 @@ export default function CampaignDetails() {
                     </VStack>
                 </VStack>
                 {data2 && address ? data2.toString(16).toLocaleLowerCase() == address.substring(2,128).toLocaleLowerCase() ?
-                (<VStack spacing={3} align="stretch" position="sticky" top={50}> {previewData && previewData.length? 
+                (<VStack spacing={3}  top={50}> {previewData && previewData.length? 
                     <IconButton
                 isRound={true}
                 variant='solid'
@@ -403,17 +404,10 @@ export default function CampaignDetails() {
       />
     </FormControl>
     )}
-    <Button colorScheme="teal" size="md" onClick={upload}>Upload CSV</Button> 
-    <DownloadDataButton 
-          campaignStart={0} 
-          campaignEnd={0} 
-          viewExponent={0} 
-          minFollowers={0} 
-          minImpressions={0} 
-          maxMentions={0} 
-          targetUserId={0} 
-        />
-        <Button colorScheme="teal" size="md" width="full">Settle Campaign</Button>
+    <Button colorScheme="teal" size="md" onClick={upload}>Settle Campaign</Button> 
+    <DownloadLocalCSVButton ></DownloadLocalCSVButton>
+          
+        {/* <Button colorScheme="teal" size="md" width="full">Settle Campaign</Button> */}
         {/* <Button colorScheme="teal" size="md" width="full">Claim</Button> */}
       </VStack>)
         : (<VStack spacing={3} align="stretch" position="sticky" top={50}>

@@ -1,0 +1,18 @@
+month,parsed_time,id,conversation_id,impression_count,reply_count,retweet_count,like_count,quote_count,text,discounted_mentions,in_reply_to_user_id,created_at,source,username,author_id,followers_count,following_count,tweet_count,listed_count,referenced_tweets
+object,"datetime64[ns, UTC]",object,object,int64,int64,int64,int64,int64,object,object,object,object,object,object,object,int64,int64,int64,int64,object
+May,2024-05-09 07:43:21+00:00,1788474825570418857,1788474762966278387,84,1,0,0,0,"1️⃣8️⃣ Coordination Stack
+@CoordinationLab Stack 工具包 🔧
+专注于金融、身份识别、社区治理等
+进一步提高网络原生业务效率和可扩展性
+https://t.co/ZSIdb073kd",['CoordinationLab'],1507010594758483982,2024-05-09T07:43:21.000Z,get_new_mentions(),Starknet_ZH,1507010594758483982,8677,595,23062,246,"[{'type': 'quoted', 'id': '1787799076890694033'}, {'type': 'replied_to', 'id': '1788474822072385965'}]"
+May,2024-05-08 09:52:08+00:00,1788144847473291277,1787901348140523855,58,1,0,2,0,"
+
+Here's the list from the pilot program. 
+
+https://t.co/xm1tfS6boE","['CoordinationLab', 'andeebtceth', 'underware_gg', 'StarknetFndn', 'kamealabs', 'Starknet']",890885987752058881,2024-05-08T09:52:08.000Z,get_new_mentions(),dylankugler,257566015,885,859,641,6,"[{'type': 'quoted', 'id': '1788143701220557153'}, {'type': 'replied_to', 'id': '1788097766381552086'}]"
+May,2024-05-08 09:48:37+00:00,1788143963989533166,1788143701220557153,1258,2,1,7,0,"18. Coordination Stack 🔨
+@CoordinationLab Stack provides a toolkit focusing on finance, identity, and governance to promote efficiency and scalability for internet-native businesses.
+
+https://t.co/lYQuuuU6jj",['CoordinationLab'],1463071986515599362,2024-05-08T09:48:37.000Z,get_new_mentions(),Starknet,1463071986515599362,337698,757,14689,1999,"[{'type': 'quoted', 'id': '1787799076890694033'}, {'type': 'replied_to', 'id': '1788143949397602335'}]"
+May,2024-05-08 04:59:22+00:00,1788071170530766994,1788071156362399785,73,1,0,1,0,"链上协作工具 @CoordinationLab
+https://t.co/obsWOIHko7",['CoordinationLab'],1507010594758483982,2024-05-08T04:59:22.000Z,get_new_mentions(),Starknet_ZH,1507010594758483982,8677,595,23062,246,"[{'type': 'quoted', 'id': '1787799076890694033'}, {'type': 'replied_to', 'id': '1788071168135815664'}]"

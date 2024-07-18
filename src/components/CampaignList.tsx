@@ -167,7 +167,7 @@ export default function CampaignList() {
                             <Button size="sm" onClick={() => handleViewClick(i+1)} colorScheme="teal">View</Button>
                         </HStack>
                         <Text>Token Allotted: {campaign.token_amount.toString()} USDC</Text>
-                        <Text color="blue.500">{getDaysInfo(Number(campaign.start_time),Number(campaign.duration))}</Text>
+                        <Text color="blue.500">{getDaysInfo(Number(campaign.start_time),Number(campaign.end_time))}</Text>
                     </Stack>
                 ))}
             </SimpleGrid>

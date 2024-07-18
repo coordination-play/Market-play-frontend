@@ -90,9 +90,6 @@ export default function CampaignDetails() {
         // console.log("data2",previewData, data2.toString(16))
         if (address && data2) {
             console.log("data2")
-            console.log(address.substring(2,128).toLocaleLowerCase())
-            console.log(address.substring(2,128).toLocaleLowerCase() == data2.toString(16).toLocaleLowerCase())
-            console.log(data2.toString(16).toLocaleLowerCase())
         }
         
       }, [isLoading2, address])
